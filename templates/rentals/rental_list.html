@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}All Rentals · rentCarKom{% endblock %}
+
+{% block content %}
+  <p><a class="back" href="{% url 'catalog' %}">Back to cars</a></p>
+  <h1>All Rentals</h1>
+
+  <form class="filters" method="get">
+    <label>
+      Status
+      <select name="status">
+        {% for option in statuses %}
+          <option value="{{ option }}" {% if status == option %}selected{% endif %}>{{ option|title }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <button type="submit">Apply</button>
+  </form>
+
+  {% if not rentals %}
+    <p class="empty">No rentals found</p>
+  {% endif %}
+
+  <div class="cards">
+    {% for rental in rentals %}
+      <article class="card rental-card">
+        <div class="card-body">
+          <div class="card-title">
+            <strong>{{ rental.car_brand }} {{ rental.car_model }}</strong>
+            <span class="chip {{ rental.status }}">{{ rental.status|upper }}</span>
+          </div>
+          <p class="muted">Plate: {{ rental.car_plate }}</p>
+          <p>{{ rental.renter_name }} ({{ rental.user_email }})</p>
+          <p class="muted">
+            {{ rental.start_datetime|date:"Y-m-d H:i" }} → {{ rental.end_datetime|date:"Y-m-d H:i" }}
+          </p>
+          <p>{{ rental.days }} days · ${{ rental.total_price|floatformat:"-2" }}</p>
+          {% if rental.status == "active" %}
+            <div class="actions">
+              <form method="post" action="{% url 'rental_complete' rental.pk %}">
+                {% csrf_token %}
+                <button class="button" type="submit">Mark Completed</button>
+              </form>
+              <form method="post" action="{% url 'rental_cancel' rental.pk %}">
+                {% csrf_token %}
+                <button class="button danger" type="submit">Cancel Rental</button>
+              </form>
+            </div>
+          {% endif %}
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+{% endblock %}

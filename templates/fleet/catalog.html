@@ -8,6 +8,16 @@
     <p><a class="button" href="{% url 'car_create' %}">Add Car</a></p>
   {% endif %}
 
+  {% if stats %}
+    <section class="stats">
+      <div class="stat"><strong>{{ stats.total_cars }}</strong>Total Cars</div>
+      <div class="stat"><strong>{{ stats.rented }}</strong>Rented</div>
+      <div class="stat"><strong>{{ stats.available }}</strong>Available</div>
+      <div class="stat"><strong>{{ stats.all_rentals }}</strong>All Rentals</div>
+    </section>
+    <p><a href="{% url 'rental_list' %}">All Rentals</a></p>
+  {% endif %}
+
   <form class="filters" method="get">
     <label class="check">
       <input type="checkbox" name="available" value="1" {% if available %}checked{% endif %}>

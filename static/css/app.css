@@ -72,6 +72,7 @@ h2 { margin: 20px 0 8px; font-size: 1rem; }
 .check { display: flex; gap: 6px; align-items: center; }
 
 .cards { display: grid; gap: 10px; }
+.rental-card { display: block; }
 
 .card {
   display: flex;
@@ -114,6 +115,9 @@ h2 { margin: 20px 0 8px; font-size: 1rem; }
 }
 .chip.free { background: #16a34a; }
 .chip.rented { background: #f87171; }
+.chip.active { background: #ea580c; }
+.chip.completed { background: #16a34a; }
+.chip.cancelled { background: #ef4444; }
 .chip.role { background: #6b7280; }
 .chip.role.admin { background: #f87171; }
 .chip.role.manager { background: #60a5fa; }

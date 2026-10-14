@@ -1,3 +1,4 @@
+from django.apps import apps
 from django.contrib import messages
 from django.db.models import ProtectedError
 from django.shortcuts import get_object_or_404, redirect
@@ -38,6 +39,24 @@ class CarDetailView(DetailView):
             annotate_availability(Car.objects.prefetch_related("photos")),
             pk=self.kwargs["pk"],
         )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["active_rental"] = None
+        context["my_rentals"] = []
+        if not apps.is_installed("rentals"):
+            return context
+        rental_model = apps.get_model("rentals", "Rental")
+        context["active_rental"] = rental_model.objects.filter(
+            car=self.object,
+            status="active",
+        ).first()
+        if self.request.user.is_authenticated:
+            context["my_rentals"] = rental_model.objects.filter(
+                car=self.object,
+                user=self.request.user,
+            )
+        return context
 
 
 class CarCreateView(AdminRequiredMixin, CreateView):

@@ -49,6 +49,72 @@
     <h2>Description</h2>
     <p>{{ car.description|default:"—" }}</p>
 
+    {% if active_rental and user.is_authenticated and user.is_staff_role %}
+      <section class="panel">
+        <h2>Active Rental</h2>
+        <p>Renter: {{ active_rental.renter_name }} ({{ active_rental.user_email }})</p>
+        <p>From: {{ active_rental.start_datetime|date:"Y-m-d H:i" }}</p>
+        <p>Until: {{ active_rental.end_datetime|date:"Y-m-d H:i" }}</p>
+        <p><strong>Total: ${{ active_rental.total_price|floatformat:"-2" }}</strong></p>
+        <div class="actions">
+          <form method="post" action="{% url 'rental_complete' active_rental.pk %}">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.path }}">
+            <button class="button" type="submit">Mark Completed</button>
+          </form>
+          <form method="post" action="{% url 'rental_cancel' active_rental.pk %}">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.path }}">
+            <button class="button danger" type="submit">Cancel Rental</button>
+          </form>
+        </div>
+      </section>
+    {% endif %}
+
+    {% if not user.is_authenticated %}
+      <section class="panel">
+        <p>Log in to rent this car</p>
+        {% url 'login' as login_url %}
+        <a class="button" href="{% if login_url %}{{ login_url }}{% else %}/accounts/login/{% endif %}?next={{ request.path|urlencode }}">Go to Login</a>
+      </section>
+    {% elif car.is_rented %}
+      <section class="panel">
+        <button class="button" type="button" disabled>Currently Unavailable</button>
+      </section>
+    {% else %}
+      <form class="form-card" method="post" action="{% url 'rent_car' car.pk %}">
+        {% csrf_token %}
+        <h2>Book This Car</h2>
+        <label class="field">
+          Renter full name
+          <input type="text" name="renter_name" value="{{ user.name }}" required>
+        </label>
+        <label class="field">
+          Number of days
+          <input type="number" name="days" min="1" value="1" required>
+        </label>
+        <button class="button" type="submit">Rent This Car</button>
+      </form>
+    {% endif %}
+
+    {% if my_rentals %}
+      <section class="panel">
+        <h2>My Rentals for This Car</h2>
+        {% for rental in my_rentals %}
+          <article class="card rental-card">
+            <div class="card-body">
+              <div class="card-title">
+                <strong>{{ rental.renter_name }}</strong>
+                <span class="chip {{ rental.status }}">{{ rental.status|upper }}</span>
+              </div>
+              <p class="muted">{{ rental.start_datetime|date:"Y-m-d" }} → {{ rental.end_datetime|date:"Y-m-d" }}</p>
+              <p>{{ rental.days }} days · ${{ rental.total_price|floatformat:"-2" }}</p>
+            </div>
+          </article>
+        {% endfor %}
+      </section>
+    {% endif %}
+
     {% if user.is_authenticated and user.is_admin_role %}
       <section class="panel">
         <h2>Admin Controls</h2>
