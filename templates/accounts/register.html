@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Register · rentCarKom{% endblock %}
+
+{% block content %}
+  <div class="auth">
+    <h1>Create account</h1>
+    <p class="muted">Fill in your details below</p>
+    <form class="form-card" method="post">
+      {% csrf_token %}
+      {% if form.non_field_errors %}
+        <p class="form-error">{{ form.non_field_errors|striptags }}</p>
+      {% endif %}
+      {% for field in form %}
+        <label class="field">
+          {{ field.label }}
+          {{ field }}
+          {% if field.errors %}
+            <span class="form-error">{{ field.errors|striptags }}</span>
+          {% endif %}
+        </label>
+      {% endfor %}
+      <button class="button" type="submit">Register</button>
+    </form>
+    <p><a href="{% url 'login' %}">Already have an account? Sign In</a></p>
+  </div>
+{% endblock %}

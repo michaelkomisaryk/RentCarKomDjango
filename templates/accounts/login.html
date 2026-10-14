@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Sign in · rentCarKom{% endblock %}
+
+{% block content %}
+  <div class="auth">
+    <h1>Welcome back</h1>
+    <p class="muted">Sign in to your account</p>
+    <form class="form-card" method="post">
+      {% csrf_token %}
+      {% if form.non_field_errors %}
+        <p class="form-error">{{ form.non_field_errors|striptags }}</p>
+      {% endif %}
+      {% for field in form %}
+        <label class="field">
+          {{ field.label }}
+          {{ field }}
+        </label>
+      {% endfor %}
+      <button class="button" type="submit">Sign In</button>
+    </form>
+    <p><a href="{% url 'register' %}">Don't have an account? Register</a></p>
+    <p><a href="{% url 'catalog' %}">Continue as Guest</a></p>
+  </div>
+{% endblock %}

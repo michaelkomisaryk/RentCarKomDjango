@@ -89,6 +89,9 @@ DATABASES = {
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
 AUTH_USER_MODEL = "accounts.User"
+LOGIN_URL = "login"
+LOGIN_REDIRECT_URL = "catalog"
+LOGOUT_REDIRECT_URL = "catalog"
 
 # The original app only required six characters.
 AUTH_PASSWORD_VALIDATORS = [

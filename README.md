@@ -23,4 +23,11 @@ Open http://127.0.0.1:8000/
 | Admin   | admin@rentcarkom.com   | admin123   |
 | Manager | manager@rentcarkom.com | manager123 |
 
-Passwords are stored hashed. Registration, added later, creates a client.
+Passwords are stored hashed. Registration creates a client. Guests can browse without an account.
+
+## Who can do what
+
+- Everyone can browse cars and open a car page.
+- Clients, managers, and admins can rent a free car.
+- Managers and admins see fleet stats and can complete or cancel rentals.
+- Admins can add cars, upload photos, and delete cars.
