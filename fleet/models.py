@@ -42,6 +42,14 @@ class Car(models.Model):
     class Meta:
         ordering = ["id"]
 
+    def delete(self, *args, **kwargs):
+        photos = list(self.photos.all())
+        result = super().delete(*args, **kwargs)
+        for photo in photos:
+            if photo.image:
+                photo.image.delete(save=False)
+        return result
+
     def __str__(self):
         return f"{self.brand} {self.model}"
 

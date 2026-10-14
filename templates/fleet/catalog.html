@@ -4,6 +4,9 @@
 
 {% block content %}
   <h1>Available Cars</h1>
+  {% if user.is_authenticated and user.is_admin_role %}
+    <p><a class="button" href="{% url 'car_create' %}">Add Car</a></p>
+  {% endif %}
 
   <form class="filters" method="get">
     <label class="check">

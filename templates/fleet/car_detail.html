@@ -48,5 +48,20 @@
 
     <h2>Description</h2>
     <p>{{ car.description|default:"—" }}</p>
+
+    {% if user.is_authenticated and user.is_admin_role %}
+      <section class="panel">
+        <h2>Admin Controls</h2>
+        <form method="post" action="{% url 'car_add_photos' car.pk %}" enctype="multipart/form-data">
+          {% csrf_token %}
+          <label class="field">
+            Add photos
+            <input type="file" name="photos" accept="image/*" multiple>
+          </label>
+          <button class="button secondary" type="submit">Add Photos</button>
+        </form>
+        <p class="actions"><a class="button danger" href="{% url 'car_delete' car.pk %}">Delete Car</a></p>
+      </section>
+    {% endif %}
   </article>
 {% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Add car · rentCarKom{% endblock %}
+
+{% block content %}
+  <p><a class="back" href="{% url 'catalog' %}">Back to cars</a></p>
+  <h1>Add New Car</h1>
+  <form class="form-card" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for field in form %}
+      <label class="field">
+        {{ field.label }}
+        {{ field }}
+        {% if field.errors %}
+          <span class="form-error">{{ field.errors|striptags }}</span>
+        {% endif %}
+      </label>
+    {% endfor %}
+    <label class="field">
+      Photos
+      <input type="file" name="photos" accept="image/*" multiple>
+    </label>
+    <button class="button" type="submit">Save Car</button>
+  </form>
+{% endblock %}
