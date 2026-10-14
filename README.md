@@ -10,6 +10,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py seed_users
+python manage.py seed_cars
 python manage.py runserver
 ```
 

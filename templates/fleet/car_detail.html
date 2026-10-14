@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block title %}{{ car.brand }} {{ car.model }} · rentCarKom{% endblock %}
+
+{% block content %}
+  <p><a class="back" href="{% url 'catalog' %}">Back to cars</a></p>
+
+  <article class="detail">
+    <div class="gallery">
+      {% if car.photos.all %}
+        {% with cover=car.photos.first %}
+          <img class="hero" src="{{ cover.image.url }}" alt="{{ car.brand }} {{ car.model }}">
+        {% endwith %}
+        {% if car.photos.count > 1 %}
+          <div class="thumbs">
+            {% for photo in car.photos.all %}
+              <img src="{{ photo.image.url }}" alt="Photo {{ forloop.counter }}">
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% else %}
+        <div class="hero placeholder">No photos yet</div>
+      {% endif %}
+    </div>
+
+    <div class="detail-head">
+      <div>
+        <h1>{{ car.brand }} {{ car.model }}</h1>
+        <p class="price">${{ car.price|floatformat:"-2" }} / day</p>
+      </div>
+      {% if car.is_rented %}
+        <span class="chip rented">Currently Rented</span>
+      {% else %}
+        <span class="chip free">Available for Rent</span>
+      {% endif %}
+    </div>
+
+    <dl class="specs">
+      <div><dt>Plate</dt><dd>{{ car.plate }}</dd></div>
+      <div><dt>Year</dt><dd>{{ car.year }}</dd></div>
+      <div><dt>Seats</dt><dd>{{ car.seats }}</dd></div>
+      <div><dt>Transmission</dt><dd>{{ car.transmission }}</dd></div>
+      <div><dt>Fuel</dt><dd>{{ car.fuel }}</dd></div>
+      <div><dt>Color</dt><dd>{{ car.color|default:"—" }}</dd></div>
+      <div><dt>Mileage</dt><dd>{{ car.mileage|intcomma }} km</dd></div>
+    </dl>
+
+    <h2>Description</h2>
+    <p>{{ car.description|default:"—" }}</p>
+  </article>
+{% endblock %}
