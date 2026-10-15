@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Profile · rentCarKom{% endblock %}
+
+{% block content %}
+  <h1>Profile</h1>
+  <section class="detail">
+    <dl class="specs">
+      <div><dt>Email</dt><dd>{{ user.email }}</dd></div>
+      <div><dt>Role</dt><dd>{{ user.get_role_display }}</dd></div>
+    </dl>
+    <form method="post">
+      {% csrf_token %}
+      {% for field in form %}
+        <label class="field">
+          {{ field.label }}
+          {{ field }}
+          {% if field.help_text %}<span class="muted">{{ field.help_text }}</span>{% endif %}
+          {% if field.errors %}<span class="form-error">{{ field.errors|striptags }}</span>{% endif %}
+        </label>
+      {% endfor %}
+      <button class="button" type="submit">Save profile</button>
+    </form>
+  </section>
+
+  <h2>Rented cars</h2>
+  {% if active_rentals %}
+    <div class="cards">
+      {% for rental in active_rentals %}
+        <a class="card rental-card" href="{% url 'car_detail' rental.car_id %}">
+          <div class="card-body">
+            <div class="card-title">
+              <strong>{{ rental.car_brand }} {{ rental.car_model }}</strong>
+              <span class="chip active">ACTIVE</span>
+            </div>
+            <p class="muted">Plate: {{ rental.car_plate }}</p>
+            <p class="muted">{{ rental.start_datetime|date:"Y-m-d H:i" }} → {{ rental.end_datetime|date:"Y-m-d H:i" }}</p>
+            <p>{{ rental.days }} day{{ rental.days|pluralize }} · ${{ rental.total_price|floatformat:"-2" }}</p>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="empty">No car is rented on this profile.</p>
+  {% endif %}
+
+  {% if past_rentals %}
+    <h2>Earlier rentals</h2>
+    <div class="cards">
+      {% for rental in past_rentals %}
+        <article class="card rental-card">
+          <div class="card-body">
+            <div class="card-title">
+              <strong>{{ rental.car_brand }} {{ rental.car_model }}</strong>
+              <span class="chip {{ rental.status }}">{{ rental.status|upper }}</span>
+            </div>
+            <p class="muted">Plate: {{ rental.car_plate }}</p>
+            <p>{{ rental.days }} day{{ rental.days|pluralize }} · ${{ rental.total_price|floatformat:"-2" }}</p>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endblock %}

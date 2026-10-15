@@ -15,12 +15,18 @@ from rentals.services import RentalError, cancel_rental, complete_rental, create
 class RentCarView(LoginRequiredMixin, View):
     def post(self, request, pk):
         car = get_object_or_404(Car, pk=pk)
+        if not request.user.profile_is_complete:
+            messages.error(
+                request,
+                "Add your phone, RNOKPP, and driver license in your profile before renting.",
+            )
+            return redirect("profile")
         try:
             days = int(request.POST.get("days") or 0)
         except ValueError:
             days = 0
         try:
-            rental = create_rental(car, request.user, days, request.POST.get("renter_name", ""))
+            rental = create_rental(car, request.user, days, request.user.name)
         except RentalError as exc:
             messages.error(request, str(exc))
             return redirect("car_detail", pk=car.pk)

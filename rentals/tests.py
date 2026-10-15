@@ -12,7 +12,15 @@ from rentals.services import RentalError, create_rental, rental_end
 
 
 def make_user(email, role):
-    return User.objects.create_user(email=email, password="secret1", name="Renter", role=role)
+    return User.objects.create_user(
+        email=email,
+        password="secret1",
+        name="Renter",
+        role=role,
+        phone="+380671112233",
+        rnokpp="1234567890",
+        driver_license="ВХА 123456",
+    )
 
 
 class RentalCalendarTests(TestCase):

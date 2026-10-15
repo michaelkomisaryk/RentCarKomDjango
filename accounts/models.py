@@ -41,6 +41,9 @@ class User(AbstractUser):
     username = None
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=150)
+    phone = models.CharField(max_length=20, blank=True)
+    rnokpp = models.CharField("RNOKPP", max_length=10, blank=True)
+    driver_license = models.CharField(max_length=16, blank=True)
     role = models.CharField(max_length=20, choices=Role.choices, default=Role.CLIENT)
 
     USERNAME_FIELD = "email"
@@ -58,3 +61,7 @@ class User(AbstractUser):
     @property
     def is_staff_role(self):
         return self.role in {Role.ADMIN, Role.MANAGER}
+
+    @property
+    def profile_is_complete(self):
+        return bool(self.name and self.phone and self.rnokpp and self.driver_license)

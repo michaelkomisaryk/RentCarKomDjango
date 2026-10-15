@@ -8,13 +8,13 @@ from accounts.models import User
 class AccountCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ("email", "name", "role")
+        fields = ("email", "name", "phone", "rnokpp", "driver_license", "role")
 
 
 class AccountChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
         model = User
-        fields = ("email", "name", "role")
+        fields = ("email", "name", "phone", "rnokpp", "driver_license", "role")
 
 
 @admin.register(User)
@@ -27,7 +27,7 @@ class UserAdmin(DjangoUserAdmin):
     search_fields = ("email", "name")
     fieldsets = (
         (None, {"fields": ("email", "password")}),
-        ("Personal info", {"fields": ("name", "role")}),
+        ("Personal info", {"fields": ("name", "phone", "rnokpp", "driver_license", "role")}),
         (
             "Permissions",
             {"fields": ("is_active", "is_staff", "is_superuser", "groups", "user_permissions")},

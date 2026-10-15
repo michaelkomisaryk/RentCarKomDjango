@@ -4,21 +4,37 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}rentCarKom{% endblock %}</title>
-  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+  <title>{% block title %}RentCarKom{% endblock %}</title>
+  <link rel="icon" href="{% static 'brand/favicon.svg' %}?v=6" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}?v=9">
+  <script>
+    (function () {
+      var saved = localStorage.getItem("rck-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="{% url 'catalog' %}">rentCarKom</a>
-    <nav class="nav">
-      <a href="{% url 'catalog' %}">Cars</a>
+    <a class="brand" href="{% url 'catalog' %}">
+      <img class="logo logo-light" src="{% static 'brand/logo-light.svg' %}?v=6" alt="RentCarKom">
+      <img class="logo logo-dark" src="{% static 'brand/logo-dark.svg' %}?v=6" alt="">
+    </a>
+    <button class="menu-button" type="button" data-menu aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="nav" id="site-nav" data-nav>
+      <a class="{% if request.path == '/' %}is-active{% endif %}" href="{% url 'catalog' %}">Cars</a>
       {% if user.is_authenticated %}
         {% if user.is_staff_role %}
-          <a href="{% url 'rental_list' %}">All Rentals</a>
+          <a class="{% if request.path == '/rentals/' %}is-active{% endif %}" href="{% url 'rental_list' %}">All Rentals</a>
         {% endif %}
         {% if user.is_admin_role %}
-          <a href="{% url 'car_create' %}">Add Car</a>
+          <a class="{% if request.path == '/fleet/cars/new/' %}is-active{% endif %}" href="{% url 'car_create' %}">Add Car</a>
         {% endif %}
+        <a class="{% if request.path == '/accounts/profile/' %}is-active{% endif %}" href="{% url 'profile' %}">{{ user.name }}</a>
         <span class="chip role {{ user.role }}">{{ user.role|upper }}</span>
         <form method="post" action="{% url 'logout' %}">
           {% csrf_token %}
@@ -26,10 +42,13 @@
         </form>
       {% else %}
         <span class="chip role guest">GUEST</span>
-        <a href="{% url 'login' %}">Sign in</a>
-        <a href="{% url 'register' %}">Register</a>
+        <a class="{% if request.path == '/accounts/login/' %}is-active{% endif %}" href="{% url 'login' %}">Sign in</a>
+        <a class="{% if request.path == '/accounts/register/' %}is-active{% endif %}" href="{% url 'register' %}">Register</a>
       {% endif %}
     </nav>
+    <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch color theme">
+      <span class="theme-icon" aria-hidden="true"></span>
+    </button>
   </header>
   <main class="page">
     {% if messages %}
@@ -41,5 +60,11 @@
     {% endif %}
     {% block content %}{% endblock %}
   </main>
+  <footer class="site-footer">
+    <img class="logo logo-light" src="{% static 'brand/logo-light.svg' %}?v=6" alt="">
+    <img class="logo logo-dark" src="{% static 'brand/logo-dark.svg' %}?v=6" alt="">
+    <p>Rent a car, then hand it back. Booking, fleet, and rental desk in one place.</p>
+  </footer>
+  <script src="{% static 'js/theme.js' %}?v=6"></script>
 </body>
 </html>

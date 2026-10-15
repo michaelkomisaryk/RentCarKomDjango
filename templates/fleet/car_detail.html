@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load humanize %}
+{% load humanize static %}
 
 {% block title %}{{ car.brand }} {{ car.model }} · rentCarKom{% endblock %}
 
@@ -7,18 +7,43 @@
   <p><a class="back" href="{% url 'catalog' %}">Back to cars</a></p>
 
   <article class="detail">
-    <div class="gallery">
+    <div class="gallery" data-gallery>
       {% if car.photos.all %}
-        {% with cover=car.photos.first %}
-          <img class="hero" src="{{ cover.image.url }}" alt="{{ car.brand }} {{ car.model }}">
-        {% endwith %}
+        <div class="stage">
+          {% if car.photos.count > 1 %}
+            <button type="button" class="photo-arrow prev" data-dir="-1" aria-label="Previous photo">‹</button>
+          {% endif %}
+          <button type="button" class="photo-frame" data-fullscreen aria-label="Open photo fullscreen">
+            <img class="hero" src="{{ car.photos.first.image.url }}" alt="{{ car.brand }} {{ car.model }}">
+          </button>
+          {% if car.photos.count > 1 %}
+            <button type="button" class="photo-arrow next" data-dir="1" aria-label="Next photo">›</button>
+          {% endif %}
+        </div>
         {% if car.photos.count > 1 %}
+          <p class="photo-count"><span data-index>1</span> / {{ car.photos.count }}</p>
           <div class="thumbs">
             {% for photo in car.photos.all %}
-              <img src="{{ photo.image.url }}" alt="Photo {{ forloop.counter }}">
+              <button type="button" class="thumb-btn{% if forloop.first %} is-active{% endif %}" data-src="{{ photo.image.url }}" aria-label="Photo {{ forloop.counter }}">
+                <img src="{{ photo.image.url }}" alt="">
+              </button>
             {% endfor %}
           </div>
         {% endif %}
+        <div class="lightbox" data-lightbox hidden>
+          <button type="button" class="lightbox-close" data-close aria-label="Close">×</button>
+          {% if car.photos.count > 1 %}
+            <button type="button" class="photo-arrow prev" data-dir="-1" aria-label="Previous photo">‹</button>
+            <button type="button" class="photo-arrow next" data-dir="1" aria-label="Next photo">›</button>
+          {% endif %}
+          <img class="lightbox-photo" src="{{ car.photos.first.image.url }}" alt="{{ car.brand }} {{ car.model }}">
+          {% if car.photos.count > 1 %}
+            <p class="lightbox-count"><span data-index>1</span> / {{ car.photos.count }}</p>
+          {% endif %}
+        </div>
+        <script type="application/json" data-sources>
+          [{% for photo in car.photos.all %}"{{ photo.image.url|escapejs }}"{% if not forloop.last %},{% endif %}{% endfor %}]
+        </script>
       {% else %}
         <div class="hero placeholder">No photos yet</div>
       {% endif %}
@@ -81,14 +106,19 @@
       <section class="panel">
         <button class="button" type="button" disabled>Currently Unavailable</button>
       </section>
+    {% elif not user.profile_is_complete %}
+      <section class="panel">
+        <p>Add your phone, RNOKPP, and driver license in your profile before renting.</p>
+        <a class="button" href="{% url 'profile' %}">Open profile</a>
+      </section>
     {% else %}
       <form class="form-card" method="post" action="{% url 'rent_car' car.pk %}">
         {% csrf_token %}
         <h2>Book This Car</h2>
-        <label class="field">
-          Renter full name
-          <input type="text" name="renter_name" value="{{ user.name }}" required>
-        </label>
+        <p>Renter from your profile: <strong>{{ user.name }}</strong></p>
+        <p class="muted">{{ user.email }}</p>
+        <p class="muted">{{ user.phone }} · RNOKPP {{ user.rnokpp }}</p>
+        <p class="muted">Driver license {{ user.driver_license }} · <a href="{% url 'profile' %}">Open profile</a></p>
         <label class="field">
           Number of days
           <input type="number" name="days" min="1" value="1" required>
@@ -130,4 +160,7 @@
       </section>
     {% endif %}
   </article>
+  {% if car.photos.all %}
+    <script src="{% static 'js/gallery.js' %}"></script>
+  {% endif %}
 {% endblock %}

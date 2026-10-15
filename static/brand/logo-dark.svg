@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 32" fill="none" role="img" aria-label="RentCarKom">
+  <rect width="32" height="32" rx="8" fill="#262932"/>
+  <path fill="#F97316" d="M8.5 24.5V7.5h8.1c3.7 0 6.1 2.1 6.1 5.2 0 2.5-1.6 4.3-4 4.8l4.6 7H19l-4.1-6.4h-3.2v6.4H8.5Zm3.2-9.4h4.4c1.7 0 2.7-.8 2.7-2s-1-2-2.7-2h-4.4v4Z"/>
+  <text x="42" y="22" fill="#F7F8FA" font-family="Manrope, Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">RentCar</text>
+  <text x="128" y="22" fill="#F97316" font-family="Manrope, Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Kom</text>
+</svg>

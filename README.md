@@ -4,6 +4,8 @@ Car rental app rebuilt with Django. The temporary pages cover the same roles and
 
 ## Setup
 
+The app uses a local MySQL database named `rentcarkom`. Connection settings live in `.env`.
+
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
@@ -15,6 +17,8 @@ python manage.py runserver
 ```
 
 Open http://127.0.0.1:8000/
+
+In MySQL Workbench, connect to `127.0.0.1:3306` as `root` and open the schema `rentcarkom`.
 
 ## Accounts
 

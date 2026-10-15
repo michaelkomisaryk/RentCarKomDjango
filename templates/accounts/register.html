@@ -15,6 +15,7 @@
         <label class="field">
           {{ field.label }}
           {{ field }}
+          {% if field.help_text %}<span class="muted">{{ field.help_text }}</span>{% endif %}
           {% if field.errors %}
             <span class="form-error">{{ field.errors|striptags }}</span>
           {% endif %}

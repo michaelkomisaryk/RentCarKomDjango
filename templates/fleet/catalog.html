@@ -3,7 +3,11 @@
 {% block title %}Cars · rentCarKom{% endblock %}
 
 {% block content %}
-  <h1>Available Cars</h1>
+  <header class="page-intro">
+    <p class="eyebrow">The fleet</p>
+    <h1>Available Cars</h1>
+    <p class="lede">Choose a car, check the plate, and book it for as many days as you need.</p>
+  </header>
   {% if user.is_authenticated and user.is_admin_role %}
     <p><a class="button" href="{% url 'car_create' %}">Add Car</a></p>
   {% endif %}

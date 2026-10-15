@@ -3,6 +3,9 @@ from django.test import TestCase
 from django.urls import reverse
 
 from accounts.models import Role, User
+from fleet.models import Car
+from rentals.models import Rental
+from rentals.services import create_rental
 
 
 class UserAccountTests(TestCase):
@@ -65,23 +68,47 @@ class AuthScreenTests(TestCase):
     def test_registration_creates_a_client(self):
         created = self.client.post(
             reverse("register"),
-            {"name": "New Client", "email": "New@Example.com", "password": "secret1"},
+            {
+                "name": "New Client",
+                "email": "New@Example.com",
+                "password": "secret1",
+                "phone": "0671234567",
+                "rnokpp": "1234567890",
+                "driver_license": "кіа654321",
+            },
             follow=True,
         )
         self.assertContains(created, "Registered! Please sign in.")
         user = User.objects.get(email="new@example.com")
         self.assertEqual(user.role, Role.CLIENT)
         self.assertEqual(user.name, "New Client")
+        self.assertEqual(user.phone, "+380671234567")
+        self.assertEqual(user.rnokpp, "1234567890")
+        self.assertEqual(user.driver_license, "КІА 654321")
 
         duplicate = self.client.post(
             reverse("register"),
-            {"name": "New Client", "email": "new@example.com", "password": "secret1"},
+            {
+                "name": "New Client",
+                "email": "new@example.com",
+                "password": "secret1",
+                "phone": "0671234567",
+                "rnokpp": "1234567890",
+                "driver_license": "ВХА 123456",
+            },
         )
         self.assertContains(duplicate, "Email already registered")
 
         short = self.client.post(
             reverse("register"),
-            {"name": "Short", "email": "short@example.com", "password": "123"},
+            {
+                "name": "Short",
+                "email": "short@example.com",
+                "password": "123",
+                "phone": "0671234567",
+                "rnokpp": "1234567890",
+                "driver_license": "ВХА 123456",
+            },
         )
         self.assertContains(short, "Password must be at least 6 characters")
 
@@ -97,3 +124,50 @@ class AuthScreenTests(TestCase):
         self.assertContains(page, "MANAGER")
         self.assertContains(page, "All Rentals")
         self.assertNotContains(page, "Add Car")
+
+
+class ProfileTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        call_command("seed_cars")
+        cls.client_user = User.objects.create_user(
+            email="ada@example.com",
+            password="secret1",
+            name="Ada Lovelace",
+            phone="+380671234567",
+            rnokpp="1234567890",
+            driver_license="ВХА 123456",
+        )
+
+    def test_guest_is_sent_to_login(self):
+        response = self.client.get(reverse("profile"))
+        self.assertRedirects(
+            response,
+            f"/accounts/login/?next={reverse('profile')}",
+            fetch_redirect_response=False,
+        )
+
+    def test_profile_shows_the_rented_car(self):
+        car = Car.objects.get(plate="AA 1234 KK")
+        create_rental(car, self.client_user, 3, self.client_user.name)
+        self.client.force_login(self.client_user)
+
+        page = self.client.get(reverse("profile"))
+
+        self.assertContains(page, "Ada Lovelace")
+        self.assertContains(page, "ada@example.com")
+        self.assertContains(page, "Toyota Camry")
+        self.assertContains(page, "AA 1234 KK")
+
+    def test_booking_takes_the_name_from_the_profile(self):
+        car = Car.objects.get(plate="BB 5678 KK")
+        self.client.force_login(self.client_user)
+
+        self.client.post(reverse("rent_car", args=[car.pk]), {"days": 2})
+
+        rental = Rental.objects.get(car=car)
+        self.assertEqual(rental.renter_name, "Ada Lovelace")
+        self.assertEqual(rental.user_email, "ada@example.com")
+        self.assertEqual(rental.renter_phone, "+380671234567")
+        self.assertEqual(rental.renter_rnokpp, "1234567890")
+        self.assertEqual(rental.renter_license, "ВХА 123456")
