@@ -1,8 +1,8 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.utils.translation import gettext_lazy as _
 
-from accounts.models import User
+from accounts.models import Role, User
 from accounts.validators import normalize_driver_license, normalize_phone, normalize_rnokpp
 
 
@@ -28,42 +28,67 @@ class EmailLoginForm(AuthenticationForm):
         return super().clean()
 
 
-class RegisterForm(forms.Form):
-    name = forms.CharField(label=_("Full name"), required=False)
-    email = forms.EmailField(label=_("Email"), required=False)
-    phone = forms.CharField(label=_("Phone"), required=False)
-    rnokpp = forms.CharField(label=_("RNOKPP"), required=False)
+class RegisterForm(UserCreationForm):
+    error_messages = {
+        **UserCreationForm.error_messages,
+        "password_mismatch": _("Паролі не збігаються."),
+    }
+    name = forms.CharField(label=_("Full name"))
+    email = forms.EmailField(label=_("Email"))
+    phone = forms.CharField(label=_("Phone"))
+    rnokpp = forms.CharField(label=_("RNOKPP"))
     driver_license = forms.CharField(
         label=_("Driver license series and number"),
-        required=False,
         help_text=_("New plastic license: ВХА 123456. Old laminated license: КІА 654321."),
     )
-    password = forms.CharField(label=_("Password"), required=False, widget=forms.PasswordInput)
 
-    def clean(self):
-        cleaned = super().clean()
-        name = (self.data.get("name") or "").strip()
-        email_raw = (self.data.get("email") or "").strip()
-        phone_raw = (self.data.get("phone") or "").strip()
-        rnokpp_raw = (self.data.get("rnokpp") or "").strip()
-        license_raw = (self.data.get("driver_license") or "").strip()
-        password = self.data.get("password") or ""
-        if not all([name, email_raw, phone_raw, rnokpp_raw, license_raw, password]):
-            raise forms.ValidationError(_("Заповніть усі поля."))
-        if self.errors:
-            return cleaned
-        if len(password) < 6:
-            raise forms.ValidationError(_("Пароль має містити щонайменше 6 символів."))
-        email = email_raw.lower()
+    class Meta(UserCreationForm.Meta):
+        model = User
+        fields = ("name", "email", "phone", "rnokpp", "driver_license")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["password1"].label = _("Password")
+        self.fields["password2"].label = _("Confirm new password")
+        for field in self.fields.values():
+            field.error_messages["required"] = _("Заповніть усі поля.")
+        self.order_fields(
+            ["name", "email", "phone", "rnokpp", "driver_license", "password1", "password2"]
+        )
+
+    def clean_name(self):
+        name = (self.cleaned_data.get("name") or "").strip()
+        if not name:
+            raise forms.ValidationError(_("Ім’я не може бути порожнім."))
+        return name
+
+    def clean_email(self):
+        email = (self.cleaned_data.get("email") or "").strip().lower()
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError(_("Ця електронна пошта вже зареєстрована."))
-        cleaned["name"] = name
-        cleaned["email"] = email
-        cleaned["phone"] = normalize_phone(phone_raw)
-        cleaned["rnokpp"] = normalize_rnokpp(rnokpp_raw)
-        cleaned["driver_license"] = normalize_driver_license(license_raw)
-        cleaned["password"] = password
-        return cleaned
+        return email
+
+    def clean_phone(self):
+        return normalize_phone(self.cleaned_data.get("phone"))
+
+    def clean_rnokpp(self):
+        return normalize_rnokpp(self.cleaned_data.get("rnokpp"))
+
+    def clean_driver_license(self):
+        return normalize_driver_license(self.cleaned_data.get("driver_license"))
+
+    def clean_password1(self):
+        password = self.cleaned_data.get("password1") or ""
+        if len(password) < 6:
+            raise forms.ValidationError(_("Пароль має містити щонайменше 6 символів."))
+        return password
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.role = Role.CLIENT
+        if commit:
+            user.save()
+        return user
 
 
 class ProfileForm(forms.ModelForm):

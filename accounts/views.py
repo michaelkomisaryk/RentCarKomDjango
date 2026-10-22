@@ -8,7 +8,6 @@ from django.utils.translation import gettext as _
 from django.views.generic import FormView, TemplateView
 
 from accounts.forms import EmailLoginForm, PasswordChangeForm, ProfileForm, RegisterForm
-from accounts.models import Role, User
 
 
 class SignInView(LoginView):
@@ -23,15 +22,7 @@ class RegisterView(FormView):
     success_url = reverse_lazy("accounts:login")
 
     def form_valid(self, form):
-        User.objects.create_user(
-            email=form.cleaned_data["email"],
-            password=form.cleaned_data["password"],
-            name=form.cleaned_data["name"],
-            phone=form.cleaned_data["phone"],
-            rnokpp=form.cleaned_data["rnokpp"],
-            driver_license=form.cleaned_data["driver_license"],
-            role=Role.CLIENT,
-        )
+        form.save()
         messages.success(self.request, _("Registered! Please sign in."))
         return super().form_valid(form)
 

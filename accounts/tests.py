@@ -71,7 +71,8 @@ class AuthScreenTests(TestCase):
             {
                 "name": "New Client",
                 "email": "New@Example.com",
-                "password": "secret1",
+                "password1": "secret1",
+                "password2": "secret1",
                 "phone": "0671234567",
                 "rnokpp": "1234567890",
                 "driver_license": "кіа654321",
@@ -91,7 +92,8 @@ class AuthScreenTests(TestCase):
             {
                 "name": "New Client",
                 "email": "new@example.com",
-                "password": "secret1",
+                "password1": "secret1",
+                "password2": "secret1",
                 "phone": "0671234567",
                 "rnokpp": "1234567890",
                 "driver_license": "ВХА 123456",
@@ -104,7 +106,8 @@ class AuthScreenTests(TestCase):
             {
                 "name": "Short",
                 "email": "short@example.com",
-                "password": "123",
+                "password1": "123",
+                "password2": "123",
                 "phone": "0671234567",
                 "rnokpp": "1234567890",
                 "driver_license": "ВХА 123456",
