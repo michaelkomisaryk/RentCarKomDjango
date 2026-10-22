@@ -63,7 +63,17 @@ class AuthScreenTests(TestCase):
         guest = self.client.get(reverse("fleet:catalog"))
         self.assertContains(guest, "GUEST")
         self.assertContains(guest, "Sign in")
+        self.assertEqual(guest.headers["Content-Language"], "en")
         self.assertNotContains(guest, "All Rentals")
+
+    def test_password_reset_sends_a_link(self):
+        page = self.client.get(reverse("accounts:password_reset"))
+        self.assertContains(page, "Reset password")
+        sent = self.client.post(
+            reverse("accounts:password_reset"),
+            {"email": "admin@rentcarkom.com"},
+        )
+        self.assertRedirects(sent, reverse("accounts:password_reset_done"))
 
     def test_registration_creates_a_client(self):
         created = self.client.post(
