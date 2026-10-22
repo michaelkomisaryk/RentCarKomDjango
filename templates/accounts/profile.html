@@ -1,13 +1,14 @@
 {% extends "base.html" %}
+{% load currency i18n %}
 
-{% block title %}Profile · rentCarKom{% endblock %}
+{% block title %}{% trans "Profile" %} · rentCarKom{% endblock %}
 
 {% block content %}
-  <h1>Profile</h1>
+  <h1>{% trans "Profile" %}</h1>
   <section class="detail">
     <dl class="specs">
-      <div><dt>Email</dt><dd>{{ user.email }}</dd></div>
-      <div><dt>Role</dt><dd>{{ user.get_role_display }}</dd></div>
+      <div><dt>{% trans "Email" %}</dt><dd>{{ user.email }}</dd></div>
+      <div><dt>{% trans "Role" %}</dt><dd>{{ user.get_role_display|tr }}</dd></div>
     </dl>
     <form method="post">
       {% csrf_token %}
@@ -19,43 +20,66 @@
           {% if field.errors %}<span class="form-error">{{ field.errors|striptags }}</span>{% endif %}
         </label>
       {% endfor %}
-      <button class="button" type="submit">Save profile</button>
+      <button class="button" type="submit">{% trans "Save profile" %}</button>
     </form>
   </section>
 
-  <h2>Rented cars</h2>
+  <h2>{% trans "Password" %}</h2>
+  <section class="detail">
+    <form method="post">
+      {% csrf_token %}
+      <input type="hidden" name="form" value="password">
+      {% if password_form.non_field_errors %}
+        <p class="form-error">{{ password_form.non_field_errors|striptags }}</p>
+      {% endif %}
+      {% for field in password_form %}
+        <label class="field">
+          {{ field.label }}
+          {{ field }}
+          {% if field.errors %}<span class="form-error">{{ field.errors|striptags }}</span>{% endif %}
+        </label>
+      {% endfor %}
+      <button class="button" type="submit">{% trans "Change password" %}</button>
+    </form>
+  </section>
+
+  <h2>{% trans "Rented cars" %}</h2>
   {% if active_rentals %}
     <div class="cards">
       {% for rental in active_rentals %}
-        <a class="card rental-card" href="{% url 'car_detail' rental.car_id %}">
+        <article class="card rental-card">
           <div class="card-body">
             <div class="card-title">
-              <strong>{{ rental.car_brand }} {{ rental.car_model }}</strong>
-              <span class="chip active">ACTIVE</span>
+              <a href="{% url 'car_detail' rental.car_id %}"><strong>{{ rental.car_brand }} {{ rental.car_model }}</strong></a>
+              <span class="chip active">{% trans "ACTIVE" %}</span>
             </div>
-            <p class="muted">Plate: {{ rental.car_plate }}</p>
+            <p class="muted">{% trans "Plate:" %} {{ rental.car_plate }}</p>
             <p class="muted">{{ rental.start_datetime|date:"Y-m-d H:i" }} → {{ rental.end_datetime|date:"Y-m-d H:i" }}</p>
-            <p>{{ rental.days }} day{{ rental.days|pluralize }} · ${{ rental.total_price|floatformat:"-2" }}</p>
+            <p>{% blocktrans count counter=rental.days %}{{ counter }} day{% plural %}{{ counter }} days{% endblocktrans %} · {{ rental.total_price|money }}</p>
+            <form method="post" action="{% url 'rental_cancel_own' rental.pk %}">
+              {% csrf_token %}
+              <button class="button danger" type="submit">{% trans "Cancel rental" %}</button>
+            </form>
           </div>
-        </a>
+        </article>
       {% endfor %}
     </div>
   {% else %}
-    <p class="empty">No car is rented on this profile.</p>
+    <p class="empty">{% trans "No car is rented on this profile." %}</p>
   {% endif %}
 
   {% if past_rentals %}
-    <h2>Earlier rentals</h2>
+    <h2>{% trans "Earlier rentals" %}</h2>
     <div class="cards">
       {% for rental in past_rentals %}
         <article class="card rental-card">
           <div class="card-body">
             <div class="card-title">
               <strong>{{ rental.car_brand }} {{ rental.car_model }}</strong>
-              <span class="chip {{ rental.status }}">{{ rental.status|upper }}</span>
+              <span class="chip {{ rental.status }}">{{ rental.status|upper|tr }}</span>
             </div>
-            <p class="muted">Plate: {{ rental.car_plate }}</p>
-            <p>{{ rental.days }} day{{ rental.days|pluralize }} · ${{ rental.total_price|floatformat:"-2" }}</p>
+            <p class="muted">{% trans "Plate:" %} {{ rental.car_plate }}</p>
+            <p>{% blocktrans count counter=rental.days %}{{ counter }} day{% plural %}{{ counter }} days{% endblocktrans %} · {{ rental.total_price|money }}</p>
           </div>
         </article>
       {% endfor %}

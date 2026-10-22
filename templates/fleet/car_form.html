@@ -1,10 +1,25 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Add car · rentCarKom{% endblock %}
+{% block title %}{% if form.instance.pk %}{% trans "Edit car" %}{% else %}{% trans "Add car" %}{% endif %} · rentCarKom{% endblock %}
 
 {% block content %}
-  <p><a class="back" href="{% url 'catalog' %}">Back to cars</a></p>
-  <h1>Add New Car</h1>
+  <p><a class="back" href="{% if form.instance.pk %}{% url 'car_detail' form.instance.pk %}{% else %}{% url 'catalog' %}{% endif %}">{% trans "Back" %}</a></p>
+  <h1>{% if form.instance.pk %}{% blocktrans with brand=form.instance.brand model=form.instance.model %}Edit {{ brand }} {{ model }}{% endblocktrans %}{% else %}{% trans "Add New Car" %}{% endif %}</h1>
+  {% if form.instance.pk and form.instance.photos.all %}
+    <div class="photo-manage">
+      {% for photo in form.instance.photos.all %}
+        <figure>
+          <img src="{{ photo.image.url }}" alt="">
+          <form method="post" action="{% url 'car_delete_photo' form.instance.pk photo.pk %}">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{% url 'car_edit' form.instance.pk %}">
+            <button class="button danger" type="submit">{% trans "Delete photo" %}</button>
+          </form>
+        </figure>
+      {% endfor %}
+    </div>
+  {% endif %}
   <form class="form-card" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {% for field in form %}
@@ -17,9 +32,9 @@
       </label>
     {% endfor %}
     <label class="field">
-      Photos
+      {% if form.instance.pk %}{% trans "Add more photos" %}{% else %}{% trans "Photos" %}{% endif %}
       <input type="file" name="photos" accept="image/*" multiple>
     </label>
-    <button class="button" type="submit">Save Car</button>
+    <button class="button" type="submit">{% if form.instance.pk %}{% trans "Save changes" %}{% else %}{% trans "Save Car" %}{% endif %}</button>
   </form>
 {% endblock %}

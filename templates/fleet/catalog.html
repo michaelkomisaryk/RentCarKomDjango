@@ -1,45 +1,74 @@
 {% extends "base.html" %}
+{% load currency i18n %}
 
-{% block title %}Cars · rentCarKom{% endblock %}
+{% block title %}{% trans "Cars" %} · rentCarKom{% endblock %}
 
 {% block content %}
   <header class="page-intro">
-    <p class="eyebrow">The fleet</p>
-    <h1>Available Cars</h1>
-    <p class="lede">Choose a car, check the plate, and book it for as many days as you need.</p>
+    <p class="eyebrow">{% trans "The fleet" %}</p>
+    <h1>{% trans "Available Cars" %}</h1>
+    <p class="lede">{% trans "Choose a car, check the plate, and book it for as many days as you need." %}</p>
   </header>
   {% if user.is_authenticated and user.is_admin_role %}
-    <p><a class="button" href="{% url 'car_create' %}">Add Car</a></p>
+    <p><a class="button" href="{% url 'car_create' %}">{% trans "Add Car" %}</a></p>
   {% endif %}
 
   {% if stats %}
     <section class="stats">
-      <div class="stat"><strong>{{ stats.total_cars }}</strong>Total Cars</div>
-      <div class="stat"><strong>{{ stats.rented }}</strong>Rented</div>
-      <div class="stat"><strong>{{ stats.available }}</strong>Available</div>
-      <div class="stat"><strong>{{ stats.all_rentals }}</strong>All Rentals</div>
+      <div class="stat"><strong>{{ stats.total_cars }}</strong>{% trans "Total Cars" %}</div>
+      <div class="stat"><strong>{{ stats.rented }}</strong>{% trans "Rented" %}</div>
+      <div class="stat"><strong>{{ stats.available }}</strong>{% trans "Available" %}</div>
+      <div class="stat"><strong>{{ stats.all_rentals }}</strong>{% trans "All Rentals" %}</div>
     </section>
-    <p><a href="{% url 'rental_list' %}">All Rentals</a></p>
+    <p><a href="{% url 'rental_list' %}">{% trans "All Rentals" %}</a></p>
   {% endif %}
 
   <form class="filters" method="get">
+    <label class="search">
+      {% trans "Search" %}
+      <input type="search" name="q" value="{{ query }}" placeholder="{% trans 'Brand, model, or plate' %}">
+    </label>
     <label class="check">
       <input type="checkbox" name="available" value="1" {% if available %}checked{% endif %}>
-      Available only
+      {% trans "Available only" %}
     </label>
     <label>
-      Fuel
+      {% trans "Fuel" %}
       <select name="fuel">
         {% for option in fuels %}
-          <option value="{{ option }}" {% if fuel == option %}selected{% endif %}>{{ option }}</option>
+          <option value="{{ option }}" {% if fuel == option %}selected{% endif %}>{{ option|tr }}</option>
         {% endfor %}
       </select>
     </label>
-    <button type="submit">Apply</button>
+    <label>
+      {% trans "Class" %}
+      <select name="class">
+        {% for option in classes %}
+          <option value="{{ option }}" {% if car_class == option %}selected{% endif %}>{{ option|tr }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>
+      {% trans "Transmission" %}
+      <select name="transmission">
+        {% for option in transmissions %}
+          <option value="{{ option }}" {% if transmission == option %}selected{% endif %}>{{ option|tr }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>
+      {% trans "Seats" %}
+      <select name="seats">
+        {% for option in seat_choices %}
+          <option value="{{ option }}" {% if seats == option %}selected{% endif %}>{{ option|tr }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <button type="submit">{% trans "Apply" %}</button>
   </form>
 
   {% if not cars %}
-    <p class="empty">No cars match your filters</p>
+    <p class="empty">{% trans "No cars match your filters" %}</p>
   {% endif %}
 
   <div class="cards">
@@ -48,9 +77,9 @@
         <div class="thumb">
           {% with photo=car.photos.first %}
             {% if photo %}
-              <img src="{{ photo.image.url }}" alt="{{ car.brand }} {{ car.model }}">
+              <img src="{{ photo.image.url }}" alt="{{ car.brand }} {{ car.model }}" loading="lazy">
             {% else %}
-              <span>No photo</span>
+              <span>{% trans "No photo" %}</span>
             {% endif %}
           {% endwith %}
         </div>
@@ -58,15 +87,15 @@
           <div class="card-title">
             <strong>{{ car.brand }} {{ car.model }}</strong>
             {% if car.is_rented %}
-              <span class="chip rented">Rented</span>
+              <span class="chip rented">{% trans "Rented" %}</span>
             {% else %}
-              <span class="chip free">Available</span>
+              <span class="chip free">{% trans "Available" %}</span>
             {% endif %}
           </div>
-          <p class="muted">{{ car.year }} · {{ car.fuel }} · {{ car.transmission }}</p>
-          <p class="muted">Plate: {{ car.plate }}</p>
-          <p class="price">${{ car.price|floatformat:"-2" }}/day</p>
-          <span class="linkish">View Details</span>
+          <p class="muted">{{ car.year }} · {{ car.car_class|tr }} · {{ car.fuel|tr }} · {{ car.transmission|tr }}</p>
+          <p class="muted">{% trans "Plate:" %} {{ car.plate }}</p>
+          <p class="price">{{ car.price|money }}{% trans "/day" %}</p>
+          <span class="linkish">{% trans "View Details" %}</span>
         </div>
       </a>
     {% endfor %}

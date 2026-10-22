@@ -1,13 +1,14 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Delete {{ car.brand }} {{ car.model }} · rentCarKom{% endblock %}
+{% block title %}{% blocktrans with brand=car.brand model=car.model %}Delete {{ brand }} {{ model }}{% endblocktrans %} · rentCarKom{% endblock %}
 
 {% block content %}
-  <h1>Delete car?</h1>
-  <p>Delete {{ car.brand }} {{ car.model }}? This cannot be undone.</p>
+  <h1>{% trans "Delete car?" %}</h1>
+  <p>{% blocktrans with brand=car.brand model=car.model %}Delete {{ brand }} {{ model }}? This cannot be undone.{% endblocktrans %}</p>
   <form method="post" class="actions">
     {% csrf_token %}
-    <a class="button secondary" href="{% url 'car_detail' car.pk %}">Cancel</a>
-    <button class="button danger" type="submit">Delete</button>
+    <a class="button secondary" href="{% url 'car_detail' car.pk %}">{% trans "Cancel" %}</a>
+    <button class="button danger" type="submit">{% trans "Delete" %}</button>
   </form>
 {% endblock %}

@@ -29,6 +29,7 @@ CREATE TABLE fleet_car (
     seats smallint NOT NULL CHECK (seats >= 0),
     transmission varchar(20) NOT NULL,
     fuel varchar(20) NOT NULL,
+    car_class varchar(20) NOT NULL,
     plate varchar(32) NOT NULL UNIQUE,
     color varchar(50) NOT NULL,
     mileage integer NOT NULL CHECK (mileage >= 0),

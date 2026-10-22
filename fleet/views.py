@@ -3,12 +3,15 @@ from django.contrib import messages
 from django.db.models import ProtectedError
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
+from django.utils.http import url_has_allowed_host_and_scheme
+from django.utils.translation import gettext as _
+from django.utils.translation import ngettext
 from django.views import View
-from django.views.generic import CreateView, DeleteView, DetailView, ListView
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
 from accounts.mixins import AdminRequiredMixin
 from fleet.forms import CarForm
-from fleet.models import Car, CarPhoto, Fuel
+from fleet.models import Car, CarClass, CarPhoto, Fuel, Transmission
 from fleet.queries import annotate_availability, catalog_cars
 
 
@@ -19,15 +22,35 @@ class CarListView(ListView):
     def get_queryset(self):
         return catalog_cars(
             fuel=self.request.GET.get("fuel", "All"),
+            car_class=self.request.GET.get("class", "All"),
+            transmission=self.request.GET.get("transmission", "All"),
+            seats=_seats(self.request.GET.get("seats")),
+            query=self.request.GET.get("q", ""),
             available_only=self.request.GET.get("available") == "1",
         )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["fuel"] = self.request.GET.get("fuel", "All")
+        context["car_class"] = self.request.GET.get("class", "All")
+        context["transmission"] = self.request.GET.get("transmission", "All")
+        context["seats"] = self.request.GET.get("seats") or "All"
+        context["query"] = self.request.GET.get("q", "")
         context["available"] = self.request.GET.get("available") == "1"
         context["fuels"] = ["All", *Fuel.values]
+        context["classes"] = ["All", *CarClass.values]
+        context["transmissions"] = ["All", *Transmission.values]
+        context["seat_choices"] = ["All", "4", "5", "7"]
         return context
+
+
+def _seats(value):
+    if not value or value == "All":
+        return None
+    try:
+        return int(value)
+    except ValueError:
+        return None
 
 
 class CarDetailView(DetailView):
@@ -72,12 +95,34 @@ class CarCreateView(AdminRequiredMixin, CreateView):
                 CarPhoto.objects.create(car=self.object, image=image)
         messages.success(
             self.request,
-            f"Car '{self.object.brand} {self.object.model}' added!",
+            _("Car '%(brand)s %(model)s' added!")
+            % {"brand": self.object.brand, "model": self.object.model},
         )
         return response
 
     def get_success_url(self):
         return reverse("catalog")
+
+
+class CarUpdateView(AdminRequiredMixin, UpdateView):
+    model = Car
+    form_class = CarForm
+    template_name = "fleet/car_form.html"
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        for image in self.request.FILES.getlist("photos"):
+            if image:
+                CarPhoto.objects.create(car=self.object, image=image)
+        messages.success(
+            self.request,
+            _("Car '%(brand)s %(model)s' updated!")
+            % {"brand": self.object.brand, "model": self.object.model},
+        )
+        return response
+
+    def get_success_url(self):
+        return reverse("car_detail", kwargs={"pk": self.object.pk})
 
 
 class CarDeleteView(AdminRequiredMixin, DeleteView):
@@ -91,9 +136,9 @@ class CarDeleteView(AdminRequiredMixin, DeleteView):
         try:
             self.object.delete()
         except ProtectedError:
-            messages.error(self.request, "This car has rentals and cannot be deleted.")
+            messages.error(self.request, _("This car has rentals and cannot be deleted."))
             return redirect("car_detail", pk=self.object.pk)
-        messages.success(self.request, "Car deleted")
+        messages.success(self.request, _("Car deleted"))
         return redirect(success_url)
 
 
@@ -102,9 +147,30 @@ class CarPhotoUploadView(AdminRequiredMixin, View):
         car = get_object_or_404(Car, pk=pk)
         images = [image for image in request.FILES.getlist("photos") if image]
         if not images:
-            messages.error(request, "Choose at least one photo")
+            messages.error(request, _("Choose at least one photo"))
             return redirect("car_detail", pk=car.pk)
         for image in images:
             CarPhoto.objects.create(car=car, image=image)
-        messages.success(request, f"Added {len(images)} photo(s) successfully!")
+        messages.success(
+            request,
+            ngettext(
+                "Added %(count)s photo successfully!",
+                "Added %(count)s photos successfully!",
+                len(images),
+            )
+            % {"count": len(images)},
+        )
         return redirect("car_detail", pk=car.pk)
+
+
+class CarPhotoDeleteView(AdminRequiredMixin, View):
+    def post(self, request, pk, photo_pk):
+        photo = get_object_or_404(CarPhoto, pk=photo_pk, car_id=pk)
+        if photo.image:
+            photo.image.delete(save=False)
+        photo.delete()
+        messages.success(request, _("Photo deleted"))
+        target = request.POST.get("next") or reverse("car_detail", kwargs={"pk": pk})
+        if url_has_allowed_host_and_scheme(target, allowed_hosts={request.get_host()}):
+            return redirect(target)
+        return redirect("car_detail", pk=pk)

@@ -10,7 +10,7 @@ class CarPhotoInline(admin.TabularInline):
 
 @admin.register(Car)
 class CarAdmin(admin.ModelAdmin):
-    list_display = ("brand", "model", "year", "plate", "fuel", "price")
+    list_display = ("brand", "model", "year", "plate", "car_class", "fuel", "price")
     search_fields = ("brand", "model", "plate")
     inlines = [CarPhotoInline]
 

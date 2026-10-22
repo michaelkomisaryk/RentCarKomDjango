@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Register · rentCarKom{% endblock %}
+{% block title %}{% trans "Register" %} · rentCarKom{% endblock %}
 
 {% block content %}
   <div class="auth">
-    <h1>Create account</h1>
-    <p class="muted">Fill in your details below</p>
+    <h1>{% trans "Create account" %}</h1>
+    <p class="muted">{% trans "Fill in your details below" %}</p>
     <form class="form-card" method="post">
       {% csrf_token %}
       {% if form.non_field_errors %}
@@ -21,8 +22,8 @@
           {% endif %}
         </label>
       {% endfor %}
-      <button class="button" type="submit">Register</button>
+      <button class="button" type="submit">{% trans "Register" %}</button>
     </form>
-    <p><a href="{% url 'login' %}">Already have an account? Sign In</a></p>
+    <p><a href="{% url 'login' %}">{% trans "Already have an account? Sign In" %}</a></p>
   </div>
 {% endblock %}

@@ -1,0 +1,787 @@
+[
+  {
+    "slug": "toyota-yaris",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "toyota-yaris",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "toyota-yaris",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "volkswagen-polo",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "volkswagen-polo",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "volkswagen-polo",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "hyundai-i20",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "hyundai-i20",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "hyundai-i20",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "renault-clio",
+    "view": "front",
+    "file": "data/photos/renault-clio/01_front.webp",
+    "title": "File:Renault Clio V (2023) 1X7A1577.jpg",
+    "license": "CC BY-SA 4.0",
+    "artist": "<a href=\"//commons.wikimedia.org/wiki/User:Alexander-93\" title=\"User:Alexander-93\">Alexander-93</a>",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c6/Renault_Clio_V_%282023%29_1X7A1577.jpg/1280px-Renault_Clio_V_%282023%29_1X7A1577.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+    "slug": "renault-clio",
+    "view": "rear",
+    "file": "data/photos/renault-clio/02_rear.webp",
+    "title": "File:Renault Clio (rear) yellow.JPG",
+    "license": "CC BY-SA 3.0",
+    "artist": "<a href=\"//commons.wikimedia.org/w/index.php?title=User:Overlaet&amp;action=edit&amp;redlink=1\" class=\"new\" title=\"User:Overlaet (page does not exist)\">Overlaet</a>",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/55/Renault_Clio_%28rear%29_yellow.JPG/1280px-Renault_Clio_%28rear%29_yellow.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+    "slug": "renault-clio",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "skoda-fabia",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "skoda-fabia",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "skoda-fabia",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "peugeot-208",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "peugeot-208",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "peugeot-208",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "volkswagen-golf",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "volkswagen-golf",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "volkswagen-golf",
+    "view": "interior",
+    "file": "data/photos/volkswagen-golf/03_interior.webp",
+    "title": "File:2019 Volkswagen Golf Match EVO TSi 1.5 Interior.jpg",
+    "license": "CC BY-SA 4.0",
+    "artist": "<a href=\"//commons.wikimedia.org/wiki/User:Vauxford\" title=\"User:Vauxford\">Vauxford</a>",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7b/2019_Volkswagen_Golf_Match_EVO_TSi_1.5_Interior.jpg/1280px-2019_Volkswagen_Golf_Match_EVO_TSi_1.5_Interior.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+    "slug": "mazda-3",
+    "view": "front",
+    "file": "data/photos/mazda-3/01_front.webp",
+    "cached": true,
+    "title": "File:Mazda 3 front 2018.jpg",
+    "license": "CC BY-SA 4.0",
+    "artist": "<a href=\"//commons.wikimedia.org/wiki/User:HutheMeow\" title=\"User:HutheMeow\">HutheMeow</a>",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/05/Mazda_3_front_2018.jpg/1280px-Mazda_3_front_2018.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+    "slug": "mazda-3",
+    "view": "rear",
+    "file": "data/photos/mazda-3/02_rear.webp",
+    "cached": true,
+    "title": "File:2018 Mazda 3 2.0S Sports (Rear).jpg",
+    "license": "CC BY-SA 4.0",
+    "artist": "<a href=\"//commons.wikimedia.org/wiki/User:Chanokchon\" title=\"User:Chanokchon\">Chanokchon</a>",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9d/2018_Mazda_3_2.0S_Sports_%28Rear%29.jpg/1280px-2018_Mazda_3_2.0S_Sports_%28Rear%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+    "slug": "mazda-3",
+    "view": "interior",
+    "file": "data/photos/mazda-3/03_interior.webp",
+    "cached": true,
+    "title": "File:2019 Mazda 3 2.0SP Sedan (Cockpit).jpg",
+    "license": "CC BY-SA 4.0",
+    "artist": "<a href=\"//commons.wikimedia.org/wiki/User:Chanokchon\" title=\"User:Chanokchon\">Chanokchon</a>",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/81/2019_Mazda_3_2.0SP_Sedan_%28Cockpit%29.jpg/1280px-2019_Mazda_3_2.0SP_Sedan_%28Cockpit%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+    "slug": "honda-civic",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "honda-civic",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "honda-civic",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "toyota-corolla",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "toyota-corolla",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "toyota-corolla",
+    "view": "interior",
+    "file": "data/photos/toyota-corolla/03_interior.webp",
+    "cached": true,
+    "title": "File:2020-21 Toyota Corolla (Corolla Altis) 1.8 Auto interior in Brunei.jpg",
+    "license": "CC BY-SA 4.0",
+    "artist": "<a href=\"//commons.wikimedia.org/w/index.php?title=User:AIMHO%27S_REBELLION_8490s&amp;action=edit&amp;redlink=1\" class=\"new\" title=\"User:AIMHO'S REBELLION 8490s (page does not exist)\">AIMHO'S REBELLION 8490s</a>",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/2020-21_Toyota_Corolla_%28Corolla_Altis%29_1.8_Auto_interior_in_Brunei.jpg/1280px-2020-21_Toyota_Corolla_%28Corolla_Altis%29_1.8_Auto_interior_in_Brunei.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+    "slug": "seat-leon",
+    "view": "front",
+    "file": "data/photos/seat-leon/01_front.webp",
+    "cached": true,
+    "title": "File:2018 SEAT Leon FR Technology TSi S-A 1.4 Front.jpg",
+    "license": "CC BY-SA 4.0",
+    "artist": "<a href=\"//commons.wikimedia.org/wiki/User:Vauxford\" title=\"User:Vauxford\">Vauxford</a>",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/70/2018_SEAT_Leon_FR_Technology_TSi_S-A_1.4_Front.jpg/1280px-2018_SEAT_Leon_FR_Technology_TSi_S-A_1.4_Front.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+    "slug": "seat-leon",
+    "view": "rear",
+    "file": "data/photos/seat-leon/02_rear.webp",
+    "cached": true,
+    "title": "File:SEAT Leon 2 FR rear.jpg",
+    "license": "CC BY-SA 2.0",
+    "artist": "Norbert Schnitzler",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/d/d2/SEAT_Leon_2_FR_rear.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+  },
+  {
+    "slug": "seat-leon",
+    "view": "interior",
+    "file": "data/photos/seat-leon/03_interior.webp",
+    "cached": true,
+    "title": "File:SEAT Leon 1P Cockpit 2.jpg",
+    "license": "CC BY-SA 2.0",
+    "artist": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.flickr.com/people/25641775@N05\">Winkelbohrer</a> from Schweiz",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/9/95/SEAT_Leon_1P_Cockpit_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+  },
+  {
+    "slug": "bmw-3-series",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "bmw-3-series",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "bmw-3-series",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "mercedes-c-class",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "mercedes-c-class",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "mercedes-c-class",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "audi-a4",
+    "view": "front",
+    "file": "data/photos/audi-a4/01_front.webp",
+    "cached": true,
+    "title": "File:Audi A4 B6 TDI Cabrio (2019-03-27 Sp r).JPG",
+    "license": "CC BY-SA 2.0 de",
+    "artist": "<a href=\"//commons.wikimedia.org/wiki/User:Spurzem\" title=\"User:Spurzem\">Lothar Spurzem</a>",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f8/Audi_A4_B6_TDI_Cabrio_%282019-03-27_Sp_r%29.JPG/1280px-Audi_A4_B6_TDI_Cabrio_%282019-03-27_Sp_r%29.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+    "slug": "audi-a4",
+    "view": "rear",
+    "file": "data/photos/audi-a4/02_rear.webp",
+    "cached": true,
+    "title": "File:Audi A4 (rear quarter).jpg",
+    "license": "CC BY-SA 3.0",
+    "artist": "<a href=\"//commons.wikimedia.org/w/index.php?title=User:Overlaet&amp;action=edit&amp;redlink=1\" class=\"new\" title=\"User:Overlaet (page does not exist)\">Overlaet</a>",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/Audi_A4_%28rear_quarter%29.jpg/1280px-Audi_A4_%28rear_quarter%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+    "slug": "audi-a4",
+    "view": "interior",
+    "file": "data/photos/audi-a4/03_interior.webp",
+    "cached": true,
+    "title": "File:2019 Audi A4 S Line 40 TDi Quattro S-Tronic facelift 2.0 Interior.jpg",
+    "license": "CC BY-SA 4.0",
+    "artist": "<a href=\"//commons.wikimedia.org/wiki/User:Vauxford\" title=\"User:Vauxford\">Vauxford</a>",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/85/2019_Audi_A4_S_Line_40_TDi_Quattro_S-Tronic_facelift_2.0_Interior.jpg/1280px-2019_Audi_A4_S_Line_40_TDi_Quattro_S-Tronic_facelift_2.0_Interior.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+    "slug": "volkswagen-passat",
+    "view": "front",
+    "file": "data/photos/volkswagen-passat/01_front.webp",
+    "cached": true,
+    "title": "File:2019 SAIC-Volkswagen Passat (front).jpg",
+    "license": "CC BY-SA 4.0",
+    "artist": "<a href=\"//commons.wikimedia.org/wiki/User:User3204\" title=\"User:User3204\"><b><span style=\"padding:3px; color:#0A45AD;border-radius:2px;\">User<span style=\"color: #000;background-color:#0A45AD;padding:2px;border-radius:2px;color:#FFFFFF\">3204</span></span></b></a>",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/97/2019_SAIC-Volkswagen_Passat_%28front%29.jpg/1280px-2019_SAIC-Volkswagen_Passat_%28front%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+    "slug": "volkswagen-passat",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "volkswagen-passat",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "skoda-superb",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "skoda-superb",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "skoda-superb",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "lexus-es",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "lexus-es",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "lexus-es",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "bmw-5-series",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "bmw-5-series",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "mercedes-e-class",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "mercedes-e-class",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "mercedes-e-class",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "audi-a6",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "audi-a6",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "audi-a6",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "bmw-7-series",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "bmw-7-series",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "bmw-7-series",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "mercedes-s-class",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "mercedes-s-class",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "mercedes-s-class",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "toyota-rav4",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "toyota-rav4",
+    "view": "rear",
+    "file": "data/photos/toyota-rav4/02_rear.webp",
+    "cached": true,
+    "title": "File:2016 Toyota RAV4 XLE AWD, rear left, 11-15-2022.jpg",
+    "license": "CC BY-SA 4.0",
+    "artist": "<a href=\"//commons.wikimedia.org/wiki/User:MercurySable99\" title=\"User:MercurySable99\">MercurySable99</a>",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e2/2016_Toyota_RAV4_XLE_AWD%2C_rear_left%2C_11-15-2022.jpg/1280px-2016_Toyota_RAV4_XLE_AWD%2C_rear_left%2C_11-15-2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+    "slug": "toyota-rav4",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "bmw-x5",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "bmw-x5",
+    "view": "rear",
+    "file": "data/photos/bmw-x5/02_rear.webp",
+    "cached": true,
+    "title": "File:2018 BMW X5 xDrive25d F15 (rear), Central Surabaya.jpg",
+    "license": "CC BY-SA 4.0",
+    "artist": "<a href=\"//commons.wikimedia.org/wiki/User:Alex_Neman\" title=\"User:Alex Neman\">Alex Neman</a>",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/83/2018_BMW_X5_xDrive25d_F15_%28rear%29%2C_Central_Surabaya.jpg/1280px-2018_BMW_X5_xDrive25d_F15_%28rear%29%2C_Central_Surabaya.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+    "slug": "bmw-x5",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "mercedes-glc",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "mercedes-glc",
+    "view": "rear",
+    "file": "data/photos/mercedes-glc/02_rear.webp",
+    "cached": true,
+    "title": "File:2023 Mercedes-Benz GLC 300 4MATIC rear.jpg",
+    "license": "CC BY-SA 4.0",
+    "artist": "<a href=\"//commons.wikimedia.org/wiki/User:LuvsMG481\" title=\"User:LuvsMG481\">LuvsMG481</a>",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/61/2023_Mercedes-Benz_GLC_300_4MATIC_rear.jpg/1280px-2023_Mercedes-Benz_GLC_300_4MATIC_rear.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+    "slug": "mercedes-glc",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "audi-q5",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "audi-q5",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "audi-q5",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "hyundai-tucson",
+    "view": "front",
+    "file": "data/photos/hyundai-tucson/01_front.webp",
+    "title": "File:2019 Hyundai Tucson Front-Side.jpg",
+    "license": "CC BY-SA 4.0",
+    "artist": "<a href=\"//commons.wikimedia.org/w/index.php?title=User:Ki_hoon&amp;action=edit&amp;redlink=1\" class=\"new\" title=\"User:Ki hoon (page does not exist)\">Ki hoon</a>",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/0/04/2019_Hyundai_Tucson_Front-Side.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+  },
+  {
+    "slug": "hyundai-tucson",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "hyundai-tucson",
+    "view": "interior",
+    "file": "data/photos/hyundai-tucson/03_interior.webp",
+    "title": "File:2018 Hyundai Tucson Go! SE Interior.jpg",
+    "license": "CC BY-SA 4.0",
+    "artist": "<a href=\"//commons.wikimedia.org/wiki/User:Vauxford\" title=\"User:Vauxford\">Vauxford</a>",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/2018_Hyundai_Tucson_Go%21_SE_Interior.jpg/1280px-2018_Hyundai_Tucson_Go%21_SE_Interior.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+    "slug": "kia-sportage",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "kia-sportage",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "kia-sportage",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "volvo-xc60",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "volvo-xc60",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "volvo-xc60",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "porsche-cayenne",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "porsche-cayenne",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "porsche-cayenne",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "tesla-model-3",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "tesla-model-3",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "tesla-model-3",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "tesla-model-y",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "tesla-model-y",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "tesla-model-y",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "bmw-i4",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "bmw-i4",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "hyundai-ioniq-5",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "hyundai-ioniq-5",
+    "view": "rear",
+    "file": "data/photos/hyundai-ioniq-5/02_rear.webp",
+    "cached": true,
+    "title": "File:2021 Hyundai Ioniq 5 (France) rear view.jpg",
+    "license": "CC0",
+    "artist": "crash71100",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/76/2021_Hyundai_Ioniq_5_%28France%29_rear_view.jpg/1280px-2021_Hyundai_Ioniq_5_%28France%29_rear_view.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+    "slug": "hyundai-ioniq-5",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "kia-ev6",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "kia-ev6",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "kia-ev6",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "porsche-taycan",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "porsche-taycan",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "porsche-taycan",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "volkswagen-touran",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "volkswagen-touran",
+    "view": "rear",
+    "file": "data/photos/volkswagen-touran/02_rear.webp",
+    "cached": true,
+    "title": "File:Tuned Volkswagen GOLF TOURAN (1T) rear.jpg",
+    "license": "CC BY-SA 4.0",
+    "artist": "<a href=\"//commons.wikimedia.org/wiki/User:Tokumeigakarinoaoshima\" title=\"User:Tokumeigakarinoaoshima\">Tokumeigakarinoaoshima</a>",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ee/Tuned_Volkswagen_GOLF_TOURAN_%281T%29_rear.jpg/1280px-Tuned_Volkswagen_GOLF_TOURAN_%281T%29_rear.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+    "slug": "volkswagen-touran",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "ford-s-max",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "ford-s-max",
+    "view": "rear",
+    "file": "data/photos/ford-s-max/02_rear.webp",
+    "cached": true,
+    "title": "File:2019 Ford S-Max ST-Line Rear.jpg",
+    "license": "CC BY-SA 4.0",
+    "artist": "<a href=\"//commons.wikimedia.org/wiki/User:Vauxford\" title=\"User:Vauxford\">Vauxford</a>",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/2019_Ford_S-Max_ST-Line_Rear.jpg/1280px-2019_Ford_S-Max_ST-Line_Rear.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+    "slug": "ford-s-max",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "mercedes-v-class",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "mercedes-v-class",
+    "view": "rear",
+    "file": "02_rear.webp",
+    "cached": true
+  },
+  {
+    "slug": "mercedes-v-class",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  },
+  {
+    "slug": "volkswagen-multivan",
+    "view": "front",
+    "file": "01_front.webp",
+    "cached": true
+  },
+  {
+    "slug": "volkswagen-multivan",
+    "view": "interior",
+    "file": "03_interior.webp",
+    "cached": true
+  }
+]

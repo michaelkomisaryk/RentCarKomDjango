@@ -41,7 +41,7 @@ class RentalFlowTests(TestCase):
         cls.other = make_user("other-rent@example.com", Role.CLIENT)
 
     def setUp(self):
-        self.car = Car.objects.get(plate="AA 1234 KK")
+        self.car = Car.objects.get(plate="KA 2401 IK")
 
     def test_guest_cannot_rent_and_client_cannot_open_the_desk(self):
         guest = self.client.post(reverse("rent_car", args=[self.car.pk]), {"days": 2, "renter_name": "Guest"})
@@ -66,7 +66,7 @@ class RentalFlowTests(TestCase):
         rental = Rental.objects.get()
         self.assertEqual(rental.days, 3)
         self.assertEqual(rental.total_price, self.car.price * 3)
-        self.assertEqual(rental.car_plate, "AA 1234 KK")
+        self.assertEqual(rental.car_plate, "KA 2401 IK")
         self.assertContains(first, "Rental confirmed")
 
         self.car.price = 999
@@ -81,12 +81,12 @@ class RentalFlowTests(TestCase):
         self.assertContains(second, "Car is already rented")
         self.assertEqual(Rental.objects.filter(status=Rental.Status.ACTIVE).count(), 1)
         rental.refresh_from_db()
-        self.assertEqual(rental.price_per_day, 45)
+        self.assertEqual(rental.price_per_day, 28)
 
         available = self.client.get(reverse("catalog"), {"available": "1"})
         plates = [car.plate for car in available.context["cars"]]
-        self.assertNotIn("AA 1234 KK", plates)
-        self.assertEqual(len(plates), 7)
+        self.assertNotIn("KA 2401 IK", plates)
+        self.assertEqual(len(plates), 39)
 
     def test_manager_completes_a_rental_and_the_car_can_be_booked_again(self):
         rental = create_rental(self.car, self.client_user, 2, "Ada")
@@ -98,12 +98,12 @@ class RentalFlowTests(TestCase):
 
         self.client.force_login(self.manager)
         home = self.client.get(reverse("catalog"))
-        self.assertEqual(home.context["stats"]["total_cars"], 8)
+        self.assertEqual(home.context["stats"]["total_cars"], 40)
         self.assertEqual(home.context["stats"]["rented"], 1)
-        self.assertEqual(home.context["stats"]["available"], 7)
+        self.assertEqual(home.context["stats"]["available"], 39)
         self.assertEqual(home.context["stats"]["all_rentals"], 1)
         desk = self.client.get(reverse("rental_list"))
-        self.assertContains(desk, "AA 1234 KK")
+        self.assertContains(desk, "KA 2401 IK")
 
         done = self.client.post(reverse("rental_complete", args=[rental.pk]), follow=True)
         self.assertContains(done, "Rental completed")
@@ -144,3 +144,21 @@ class RentalFlowTests(TestCase):
 
         with self.assertRaises(RentalError):
             create_rental(self.car, self.client_user, 1, "   ")
+
+    def test_client_can_cancel_only_their_own_rental(self):
+        rental = create_rental(self.car, self.client_user, 2, "Renter")
+        self.client.force_login(self.other)
+        missing = self.client.post(reverse("rental_cancel_own", args=[rental.pk]))
+        self.assertEqual(missing.status_code, 404)
+        rental.refresh_from_db()
+        self.assertEqual(rental.status, Rental.Status.ACTIVE)
+
+        self.client.force_login(self.client_user)
+        page = self.client.get(reverse("profile"))
+        self.assertContains(page, "Cancel rental")
+        done = self.client.post(reverse("rental_cancel_own", args=[rental.pk]), follow=True)
+        self.assertContains(done, "Rental cancelled")
+        rental.refresh_from_db()
+        self.assertEqual(rental.status, Rental.Status.CANCELLED)
+        self.car.refresh_from_db()
+        self.assertFalse(self.car.is_rented)

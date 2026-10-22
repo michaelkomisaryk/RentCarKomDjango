@@ -1,25 +1,26 @@
 {% extends "base.html" %}
+{% load currency i18n %}
 
-{% block title %}All Rentals · rentCarKom{% endblock %}
+{% block title %}{% trans "All Rentals" %} · rentCarKom{% endblock %}
 
 {% block content %}
-  <p><a class="back" href="{% url 'catalog' %}">Back to cars</a></p>
-  <h1>All Rentals</h1>
+  <p><a class="back" href="{% url 'catalog' %}">{% trans "Back to cars" %}</a></p>
+  <h1>{% trans "All Rentals" %}</h1>
 
   <form class="filters" method="get">
     <label>
-      Status
+      {% trans "Status" %}
       <select name="status">
         {% for option in statuses %}
-          <option value="{{ option }}" {% if status == option %}selected{% endif %}>{{ option|title }}</option>
+          <option value="{{ option }}" {% if status == option %}selected{% endif %}>{{ option|title|tr }}</option>
         {% endfor %}
       </select>
     </label>
-    <button type="submit">Apply</button>
+    <button type="submit">{% trans "Apply" %}</button>
   </form>
 
   {% if not rentals %}
-    <p class="empty">No rentals found</p>
+    <p class="empty">{% trans "No rentals found" %}</p>
   {% endif %}
 
   <div class="cards">
@@ -28,23 +29,23 @@
         <div class="card-body">
           <div class="card-title">
             <strong>{{ rental.car_brand }} {{ rental.car_model }}</strong>
-            <span class="chip {{ rental.status }}">{{ rental.status|upper }}</span>
+            <span class="chip {{ rental.status }}">{{ rental.status|upper|tr }}</span>
           </div>
-          <p class="muted">Plate: {{ rental.car_plate }}</p>
+          <p class="muted">{% trans "Plate:" %} {{ rental.car_plate }}</p>
           <p>{{ rental.renter_name }} ({{ rental.user_email }})</p>
           <p class="muted">
             {{ rental.start_datetime|date:"Y-m-d H:i" }} → {{ rental.end_datetime|date:"Y-m-d H:i" }}
           </p>
-          <p>{{ rental.days }} days · ${{ rental.total_price|floatformat:"-2" }}</p>
+          <p>{% blocktrans count counter=rental.days %}{{ counter }} day{% plural %}{{ counter }} days{% endblocktrans %} · {{ rental.total_price|money }}</p>
           {% if rental.status == "active" %}
             <div class="actions">
               <form method="post" action="{% url 'rental_complete' rental.pk %}">
                 {% csrf_token %}
-                <button class="button" type="submit">Mark Completed</button>
+                <button class="button" type="submit">{% trans "Mark Completed" %}</button>
               </form>
               <form method="post" action="{% url 'rental_cancel' rental.pk %}">
                 {% csrf_token %}
-                <button class="button danger" type="submit">Cancel Rental</button>
+                <button class="button danger" type="submit">{% trans "Cancel Rental" %}</button>
               </form>
             </div>
           {% endif %}

@@ -20,7 +20,14 @@ def annotate_availability(queryset):
     )
 
 
-def catalog_cars(fuel="All", available_only=False):
+def catalog_cars(
+    fuel="All",
+    car_class="All",
+    transmission="All",
+    seats=None,
+    query="",
+    available_only=False,
+):
     from fleet.models import Car
 
     cars = annotate_availability(
@@ -28,6 +35,22 @@ def catalog_cars(fuel="All", available_only=False):
     )
     if fuel and fuel != "All":
         cars = cars.filter(fuel=fuel)
+    if car_class and car_class != "All":
+        cars = cars.filter(car_class=car_class)
+    if transmission and transmission != "All":
+        cars = cars.filter(transmission=transmission)
+    if seats:
+        cars = cars.filter(seats=seats)
+    text = (query or "").strip()
+    if text:
+        match = Q()
+        for term in text.split():
+            match &= (
+                Q(brand__icontains=term)
+                | Q(model__icontains=term)
+                | Q(plate__icontains=term)
+            )
+        cars = cars.filter(match)
     if available_only:
         cars = cars.filter(active_rental_count=0)
     return cars

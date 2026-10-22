@@ -1,0 +1,538 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: rentCarKom\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
+
+msgid "Menu"
+msgstr "Меню"
+
+msgid "Cars"
+msgstr "Авто"
+
+msgid "All Rentals"
+msgstr "Усі оренди"
+
+msgid "Add Car"
+msgstr "Додати авто"
+
+msgid "ADMIN"
+msgstr "АДМІН"
+
+msgid "MANAGER"
+msgstr "МЕНЕДЖЕР"
+
+msgid "CLIENT"
+msgstr "КЛІЄНТ"
+
+msgid "Log out"
+msgstr "Вийти"
+
+msgid "GUEST"
+msgstr "ГІСТЬ"
+
+msgid "Sign in"
+msgstr "Увійти"
+
+msgid "Register"
+msgstr "Реєстрація"
+
+msgid "Language"
+msgstr "Мова"
+
+msgid "Switch color theme"
+msgstr "Змінити тему"
+
+msgid "Rent a car, then hand it back. Booking, fleet, and rental desk in one place."
+msgstr "Орендуйте авто і поверніть його. Бронювання, автопарк і облік оренди в одному місці."
+
+msgid "The fleet"
+msgstr "Автопарк"
+
+msgid "Available Cars"
+msgstr "Доступні авто"
+
+msgid "Choose a car, check the plate, and book it for as many days as you need."
+msgstr "Оберіть авто, перевірте номер і забронюйте на потрібну кількість днів."
+
+msgid "Total Cars"
+msgstr "Усього авто"
+
+msgid "Rented"
+msgstr "Зайняті"
+
+msgid "Available"
+msgstr "Вільні"
+
+msgid "Search"
+msgstr "Пошук"
+
+msgid "Brand, model, or plate"
+msgstr "Марка, модель або номер"
+
+msgid "Available only"
+msgstr "Лише вільні"
+
+msgid "Fuel"
+msgstr "Пальне"
+
+msgid "Class"
+msgstr "Клас"
+
+msgid "Apply"
+msgstr "Показати"
+
+msgid "No cars match your filters"
+msgstr "Немає авто за цими фільтрами"
+
+msgid "No photo"
+msgstr "Немає фото"
+
+msgid "Plate:"
+msgstr "Номер:"
+
+msgid "/day"
+msgstr "/день"
+
+msgid "View Details"
+msgstr "Деталі"
+
+msgid "Welcome back"
+msgstr "З поверненням"
+
+msgid "Sign in to your account"
+msgstr "Увійдіть у свій акаунт"
+
+msgid "Sign In"
+msgstr "Увійти"
+
+msgid "Don't have an account? Register"
+msgstr "Немає акаунта? Зареєструйтесь"
+
+msgid "Continue as Guest"
+msgstr "Продовжити як гість"
+
+msgid "Create account"
+msgstr "Створити акаунт"
+
+msgid "Fill in your details below"
+msgstr "Заповніть дані нижче"
+
+msgid "Already have an account? Sign In"
+msgstr "Вже є акаунт? Увійдіть"
+
+msgid "Delete %(brand)s %(model)s"
+msgstr "Видалити %(brand)s %(model)s"
+
+msgid "Delete car?"
+msgstr "Видалити авто?"
+
+msgid "Delete %(brand)s %(model)s? This cannot be undone."
+msgstr "Видалити %(brand)s %(model)s? Це не можна скасувати."
+
+msgid "Cancel"
+msgstr "Скасувати"
+
+msgid "Delete"
+msgstr "Видалити"
+
+msgid "Edit car"
+msgstr "Редагувати авто"
+
+msgid "Add car"
+msgstr "Додати авто"
+
+msgid "Back"
+msgstr "Назад"
+
+msgid "Edit %(brand)s %(model)s"
+msgstr "Редагувати %(brand)s %(model)s"
+
+msgid "Add New Car"
+msgstr "Нове авто"
+
+msgid "Delete photo"
+msgstr "Видалити фото"
+
+msgid "Add more photos"
+msgstr "Додати ще фото"
+
+msgid "Photos"
+msgstr "Фото"
+
+msgid "Save changes"
+msgstr "Зберегти зміни"
+
+msgid "Save Car"
+msgstr "Зберегти авто"
+
+msgid "Back to cars"
+msgstr "До авто"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "No rentals found"
+msgstr "Оренд не знайдено"
+
+msgid "%(counter)s day"
+msgid_plural "%(counter)s days"
+msgstr[0] "%(counter)s день"
+msgstr[1] "%(counter)s дні"
+msgstr[2] "%(counter)s днів"
+msgstr[3] "%(counter)s дня"
+
+msgid "Mark Completed"
+msgstr "Завершити"
+
+msgid "Cancel Rental"
+msgstr "Скасувати оренду"
+
+msgid "Profile"
+msgstr "Профіль"
+
+msgid "Email"
+msgstr "Електронна пошта"
+
+msgid "Role"
+msgstr "Роль"
+
+msgid "Save profile"
+msgstr "Зберегти профіль"
+
+msgid "Password"
+msgstr "Пароль"
+
+msgid "Change password"
+msgstr "Змінити пароль"
+
+msgid "Rented cars"
+msgstr "Орендовані авто"
+
+msgid "ACTIVE"
+msgstr "АКТИВНА"
+
+msgid "Cancel rental"
+msgstr "Скасувати оренду"
+
+msgid "No car is rented on this profile."
+msgstr "На цьому профілі немає орендованого авто."
+
+msgid "Earlier rentals"
+msgstr "Попередні оренди"
+
+msgid "Previous photo"
+msgstr "Попереднє фото"
+
+msgid "Open photo fullscreen"
+msgstr "Відкрити фото на весь екран"
+
+msgid "Next photo"
+msgstr "Наступне фото"
+
+msgid "Photo %(number)s"
+msgstr "Фото %(number)s"
+
+msgid "Close"
+msgstr "Закрити"
+
+msgid "No photos yet"
+msgstr "Фото ще немає"
+
+msgid "day"
+msgstr "день"
+
+msgid "Currently Rented"
+msgstr "Зараз в оренді"
+
+msgid "Available for Rent"
+msgstr "Доступне для оренди"
+
+msgid "Plate"
+msgstr "Номер"
+
+msgid "Year"
+msgstr "Рік"
+
+msgid "Seats"
+msgstr "Місця"
+
+msgid "Transmission"
+msgstr "Коробка"
+
+msgid "Color"
+msgstr "Колір"
+
+msgid "Mileage"
+msgstr "Пробіг"
+
+msgid "km"
+msgstr "км"
+
+msgid "Description"
+msgstr "Опис"
+
+msgid "Active Rental"
+msgstr "Активна оренда"
+
+msgid "Renter:"
+msgstr "Орендар:"
+
+msgid "From:"
+msgstr "Від:"
+
+msgid "Until:"
+msgstr "До:"
+
+msgid "Total:"
+msgstr "Разом:"
+
+msgid "Log in to rent this car"
+msgstr "Увійдіть, щоб орендувати це авто"
+
+msgid "Go to Login"
+msgstr "Увійти"
+
+msgid "Currently Unavailable"
+msgstr "Зараз недоступне"
+
+msgid "Add your phone, RNOKPP, and driver license in your profile before renting."
+msgstr "Додайте телефон, РНОКПП і посвідчення водія в профілі, перш ніж орендувати."
+
+msgid "Open profile"
+msgstr "Відкрити профіль"
+
+msgid "Book This Car"
+msgstr "Забронювати"
+
+msgid "Renter from your profile:"
+msgstr "Орендар з вашого профілю:"
+
+msgid "RNOKPP"
+msgstr "РНОКПП"
+
+msgid "Driver license"
+msgstr "Посвідчення водія"
+
+msgid "Number of days"
+msgstr "Кількість днів"
+
+msgid "Rent This Car"
+msgstr "Орендувати"
+
+msgid "My Rentals for This Car"
+msgstr "Мої оренди цього авто"
+
+msgid "Admin Controls"
+msgstr "Керування"
+
+msgid "Edit Car"
+msgstr "Редагувати"
+
+msgid "Add photos"
+msgstr "Додати фото"
+
+msgid "Add Photos"
+msgstr "Додати фото"
+
+msgid "Delete Car"
+msgstr "Видалити авто"
+
+msgid "Full name"
+msgstr "Повне ім’я"
+
+msgid "Phone"
+msgstr "Телефон"
+
+msgid "Driver license series and number"
+msgstr "Серія і номер посвідчення водія"
+
+msgid "New plastic license: ВХА 123456. Old laminated license: КІА 654321."
+msgstr "Нове пластикове: ВХА 123456. Старе ламіноване: КІА 654321."
+
+msgid "Name"
+msgstr "Ім’я"
+
+msgid "Current password"
+msgstr "Поточний пароль"
+
+msgid "New password"
+msgstr "Новий пароль"
+
+msgid "Confirm new password"
+msgstr "Підтвердьте новий пароль"
+
+msgid "Invalid email or password"
+msgstr "Невірна пошта або пароль"
+
+msgid "Please fill in all fields"
+msgstr "Заповніть усі поля"
+
+msgid "Password must be at least 6 characters"
+msgstr "Пароль має містити щонайменше 6 символів"
+
+msgid "Email already registered"
+msgstr "Ця пошта вже зареєстрована"
+
+msgid "Name cannot be empty"
+msgstr "Ім’я не може бути порожнім"
+
+msgid "Current password is incorrect"
+msgstr "Поточний пароль неправильний"
+
+msgid "Passwords do not match"
+msgstr "Паролі не збігаються"
+
+msgid "Registered! Please sign in."
+msgstr "Зареєстровано. Увійдіть."
+
+msgid "Password changed."
+msgstr "Пароль змінено."
+
+msgid "Profile saved."
+msgstr "Профіль збережено."
+
+msgid "Brand"
+msgstr "Марка"
+
+msgid "Model"
+msgstr "Модель"
+
+msgid "Price per day ($)"
+msgstr "Ціна за день ($)"
+
+msgid "License plate"
+msgstr "Номерний знак"
+
+msgid "Mileage (km)"
+msgstr "Пробіг (км)"
+
+msgid "Price per day (UAH)"
+msgstr "Ціна за день (грн)"
+
+msgid "Brand is required"
+msgstr "Вкажіть марку"
+
+msgid "Model is required"
+msgstr "Вкажіть модель"
+
+msgid "License plate is required"
+msgstr "Вкажіть номер"
+
+msgid "Valid year is required"
+msgstr "Вкажіть коректний рік"
+
+msgid "Valid price is required"
+msgstr "Вкажіть коректну ціну"
+
+msgid "Enter at least 1 day"
+msgstr "Вкажіть щонайменше 1 день"
+
+msgid "Renter name is required"
+msgstr "Вкажіть ім’я орендаря"
+
+msgid "Car is already rented"
+msgstr "Авто вже в оренді"
+
+msgid "Only an active rental can be updated"
+msgstr "Змінити можна лише активну оренду"
+
+msgid "Car '%(brand)s %(model)s' added!"
+msgstr "Авто «%(brand)s %(model)s» додано!"
+
+msgid "Car '%(brand)s %(model)s' updated!"
+msgstr "Авто «%(brand)s %(model)s» оновлено!"
+
+msgid "This car has rentals and cannot be deleted."
+msgstr "У цього авто є оренди, тож його не можна видалити."
+
+msgid "Car deleted"
+msgstr "Авто видалено"
+
+msgid "Choose at least one photo"
+msgstr "Оберіть хоча б одне фото"
+
+msgid "Added %(count)s photo successfully!"
+msgid_plural "Added %(count)s photos successfully!"
+msgstr[0] "Додано %(count)s фото."
+msgstr[1] "Додано %(count)s фото."
+msgstr[2] "Додано %(count)s фото."
+msgstr[3] "Додано %(count)s фото."
+
+msgid "Photo deleted"
+msgstr "Фото видалено"
+
+msgid "Rental confirmed. %(brand)s %(model)s, plate %(plate)s, renter %(name)s, %(days)s days, total %(total)s, id %(id)s."
+msgstr "Оренду підтверджено. %(brand)s %(model)s, номер %(plate)s, орендар %(name)s, %(days)s дн., разом %(total)s, id %(id)s."
+
+msgid "Rental cancelled"
+msgstr "Оренду скасовано"
+
+msgid "Rental completed"
+msgstr "Оренду завершено"
+
+msgid "Enter a Ukrainian phone number, for example +380671234567."
+msgstr "Вкажіть український номер телефону, наприклад +380671234567."
+
+msgid "RNOKPP must contain 10 digits."
+msgstr "РНОКПП має містити 10 цифр."
+
+msgid "Enter the series and number: ВХА 123456 for a new plastic license, or КІА 654321 for an old laminated one."
+msgstr "Вкажіть серію і номер: ВХА 123456 для нового пластикового або КІА 654321 для старого ламінованого."
+
+msgid "All"
+msgstr "Усі"
+
+msgid "Gasoline"
+msgstr "Бензин"
+
+msgid "Diesel"
+msgstr "Дизель"
+
+msgid "Hybrid"
+msgstr "Гібрид"
+
+msgid "Electric"
+msgstr "Електро"
+
+msgid "Economy"
+msgstr "Економ"
+
+msgid "Comfort"
+msgstr "Комфорт"
+
+msgid "Premium"
+msgstr "Преміум"
+
+msgid "Automatic"
+msgstr "Автомат"
+
+msgid "Manual"
+msgstr "Механіка"
+
+msgid "Active"
+msgstr "Активна"
+
+msgid "Completed"
+msgstr "Завершена"
+
+msgid "Cancelled"
+msgstr "Скасована"
+
+msgid "COMPLETED"
+msgstr "ЗАВЕРШЕНА"
+
+msgid "CANCELLED"
+msgstr "СКАСОВАНА"
+
+msgid "Client"
+msgstr "Клієнт"
+
+msgid "Manager"
+msgstr "Менеджер"
+
+msgid "Admin"
+msgstr "Адміністратор"

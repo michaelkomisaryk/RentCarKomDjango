@@ -15,6 +15,12 @@ class Transmission(models.TextChoices):
     MANUAL = "Manual", "Manual"
 
 
+class CarClass(models.TextChoices):
+    ECONOMY = "Economy", "Economy"
+    COMFORT = "Comfort", "Comfort"
+    PREMIUM = "Premium", "Premium"
+
+
 class Car(models.Model):
     brand = models.CharField(max_length=100)
     model = models.CharField(max_length=100)
@@ -27,6 +33,11 @@ class Car(models.Model):
         default=Transmission.AUTOMATIC,
     )
     fuel = models.CharField(max_length=20, choices=Fuel.choices, default=Fuel.GASOLINE)
+    car_class = models.CharField(
+        max_length=20,
+        choices=CarClass.choices,
+        default=CarClass.ECONOMY,
+    )
     plate = models.CharField(max_length=32, unique=True)
     color = models.CharField(max_length=50, blank=True)
     mileage = models.PositiveIntegerField(default=0)

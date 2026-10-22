@@ -1,6 +1,6 @@
 from django.urls import path
 
-from rentals.views import RentalActionView, RentalListView, RentCarView
+from rentals.views import CancelOwnRentalView, RentalActionView, RentalListView, RentCarView
 
 urlpatterns = [
     path("cars/<int:pk>/rent/", RentCarView.as_view(), name="rent_car"),
@@ -14,5 +14,10 @@ urlpatterns = [
         "rentals/<int:pk>/cancel/",
         RentalActionView.as_view(action="cancel"),
         name="rental_cancel",
+    ),
+    path(
+        "rentals/<int:pk>/cancel-mine/",
+        CancelOwnRentalView.as_view(),
+        name="rental_cancel_own",
     ),
 ]

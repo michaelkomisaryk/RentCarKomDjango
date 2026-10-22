@@ -148,7 +148,7 @@ class ProfileTests(TestCase):
         )
 
     def test_profile_shows_the_rented_car(self):
-        car = Car.objects.get(plate="AA 1234 KK")
+        car = Car.objects.get(plate="KA 2401 IK")
         create_rental(car, self.client_user, 3, self.client_user.name)
         self.client.force_login(self.client_user)
 
@@ -156,8 +156,8 @@ class ProfileTests(TestCase):
 
         self.assertContains(page, "Ada Lovelace")
         self.assertContains(page, "ada@example.com")
-        self.assertContains(page, "Toyota Camry")
-        self.assertContains(page, "AA 1234 KK")
+        self.assertContains(page, "Toyota Yaris")
+        self.assertContains(page, "KA 2401 IK")
 
     def test_booking_takes_the_name_from_the_profile(self):
         car = Car.objects.get(plate="BB 5678 KK")
@@ -171,3 +171,43 @@ class ProfileTests(TestCase):
         self.assertEqual(rental.renter_phone, "+380671234567")
         self.assertEqual(rental.renter_rnokpp, "1234567890")
         self.assertEqual(rental.renter_license, "ВХА 123456")
+
+    def test_profile_changes_the_password_and_keeps_the_session(self):
+        self.client.force_login(self.client_user)
+        wrong = self.client.post(
+            reverse("profile"),
+            {
+                "form": "password",
+                "current_password": "nope",
+                "new_password": "newsecret",
+                "confirm_password": "newsecret",
+            },
+        )
+        self.assertContains(wrong, "Current password is incorrect")
+
+        mismatch = self.client.post(
+            reverse("profile"),
+            {
+                "form": "password",
+                "current_password": "secret1",
+                "new_password": "newsecret",
+                "confirm_password": "other",
+            },
+        )
+        self.assertContains(mismatch, "Passwords do not match")
+
+        changed = self.client.post(
+            reverse("profile"),
+            {
+                "form": "password",
+                "current_password": "secret1",
+                "new_password": "newsecret",
+                "confirm_password": "newsecret",
+            },
+            follow=True,
+        )
+        self.assertContains(changed, "Password changed.")
+        self.assertContains(changed, "Ada Lovelace")
+        self.client_user.refresh_from_db()
+        self.assertTrue(self.client_user.check_password("newsecret"))
+        self.assertFalse(self.client_user.check_password("secret1"))

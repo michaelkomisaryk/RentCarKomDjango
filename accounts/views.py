@@ -1,11 +1,13 @@
 from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils.translation import gettext as _
 from django.views.generic import FormView, TemplateView
 
-from accounts.forms import EmailLoginForm, ProfileForm, RegisterForm
+from accounts.forms import EmailLoginForm, PasswordChangeForm, ProfileForm, RegisterForm
 from accounts.models import Role, User
 
 
@@ -30,7 +32,7 @@ class RegisterView(FormView):
             driver_license=form.cleaned_data["driver_license"],
             role=Role.CLIENT,
         )
-        messages.success(self.request, "Registered! Please sign in.")
+        messages.success(self.request, _("Registered! Please sign in."))
         return super().form_valid(form)
 
 
@@ -45,14 +47,24 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         rentals = self.request.user.rentals.select_related("car")
         context["form"] = kwargs.get("form") or ProfileForm(instance=self.request.user)
+        context["password_form"] = kwargs.get("password_form") or PasswordChangeForm(self.request.user)
         context["active_rentals"] = rentals.filter(status="active")
         context["past_rentals"] = rentals.exclude(status="active")
         return context
 
     def post(self, request):
+        if request.POST.get("form") == "password":
+            password_form = PasswordChangeForm(request.user, request.POST)
+            if password_form.is_valid():
+                user = password_form.save()
+                update_session_auth_hash(request, user)
+                messages.success(request, _("Password changed."))
+                return redirect("profile")
+            return self.render_to_response(self.get_context_data(password_form=password_form))
+
         form = ProfileForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            messages.success(request, "Profile saved.")
+            messages.success(request, _("Profile saved."))
             return redirect("profile")
         return self.render_to_response(self.get_context_data(form=form))

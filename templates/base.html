@@ -1,6 +1,6 @@
-{% load static %}
+{% load i18n static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'css/app.css' %}?v=9">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}?v=11">
   <script>
     (function () {
       var saved = localStorage.getItem("rck-theme");
@@ -24,29 +24,37 @@
       <img class="logo logo-light" src="{% static 'brand/logo-light.svg' %}?v=6" alt="RentCarKom">
       <img class="logo logo-dark" src="{% static 'brand/logo-dark.svg' %}?v=6" alt="">
     </a>
-    <button class="menu-button" type="button" data-menu aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <button class="menu-button" type="button" data-menu aria-expanded="false" aria-controls="site-nav">{% trans "Menu" %}</button>
     <nav class="nav" id="site-nav" data-nav>
-      <a class="{% if request.path == '/' %}is-active{% endif %}" href="{% url 'catalog' %}">Cars</a>
+      <a class="{% if request.path == '/' %}is-active{% endif %}" href="{% url 'catalog' %}">{% trans "Cars" %}</a>
       {% if user.is_authenticated %}
         {% if user.is_staff_role %}
-          <a class="{% if request.path == '/rentals/' %}is-active{% endif %}" href="{% url 'rental_list' %}">All Rentals</a>
+          <a class="{% if request.path == '/rentals/' %}is-active{% endif %}" href="{% url 'rental_list' %}">{% trans "All Rentals" %}</a>
         {% endif %}
         {% if user.is_admin_role %}
-          <a class="{% if request.path == '/fleet/cars/new/' %}is-active{% endif %}" href="{% url 'car_create' %}">Add Car</a>
+          <a class="{% if request.path == '/fleet/cars/new/' %}is-active{% endif %}" href="{% url 'car_create' %}">{% trans "Add Car" %}</a>
         {% endif %}
         <a class="{% if request.path == '/accounts/profile/' %}is-active{% endif %}" href="{% url 'profile' %}">{{ user.name }}</a>
-        <span class="chip role {{ user.role }}">{{ user.role|upper }}</span>
+        <span class="chip role {{ user.role }}">
+          {% if user.role == "admin" %}{% trans "ADMIN" %}{% elif user.role == "manager" %}{% trans "MANAGER" %}{% else %}{% trans "CLIENT" %}{% endif %}
+        </span>
         <form method="post" action="{% url 'logout' %}">
           {% csrf_token %}
-          <button class="link-button" type="submit">Log out</button>
+          <button class="link-button" type="submit">{% trans "Log out" %}</button>
         </form>
       {% else %}
-        <span class="chip role guest">GUEST</span>
-        <a class="{% if request.path == '/accounts/login/' %}is-active{% endif %}" href="{% url 'login' %}">Sign in</a>
-        <a class="{% if request.path == '/accounts/register/' %}is-active{% endif %}" href="{% url 'register' %}">Register</a>
+        <span class="chip role guest">{% trans "GUEST" %}</span>
+        <a class="{% if request.path == '/accounts/login/' %}is-active{% endif %}" href="{% url 'login' %}">{% trans "Sign in" %}</a>
+        <a class="{% if request.path == '/accounts/register/' %}is-active{% endif %}" href="{% url 'register' %}">{% trans "Register" %}</a>
       {% endif %}
     </nav>
-    <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch color theme">
+    <form class="lang-switch" method="post" action="{% url 'set_language' %}" aria-label="{% trans 'Language' %}">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.get_full_path }}">
+      <button type="submit" name="language" value="en" {% if LANGUAGE_CODE == "en" %}class="is-active" aria-pressed="true"{% else %}aria-pressed="false"{% endif %}>EN · $</button>
+      <button type="submit" name="language" value="uk" {% if LANGUAGE_CODE == "uk" %}class="is-active" aria-pressed="true"{% else %}aria-pressed="false"{% endif %}>УКР · грн</button>
+    </form>
+    <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="{% trans 'Switch color theme' %}">
       <span class="theme-icon" aria-hidden="true"></span>
     </button>
   </header>
@@ -63,7 +71,7 @@
   <footer class="site-footer">
     <img class="logo logo-light" src="{% static 'brand/logo-light.svg' %}?v=6" alt="">
     <img class="logo logo-dark" src="{% static 'brand/logo-dark.svg' %}?v=6" alt="">
-    <p>Rent a car, then hand it back. Booking, fleet, and rental desk in one place.</p>
+    <p>{% trans "Rent a car, then hand it back. Booking, fleet, and rental desk in one place." %}</p>
   </footer>
   <script src="{% static 'js/theme.js' %}?v=6"></script>
 </body>

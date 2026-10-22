@@ -1,40 +1,40 @@
 {% extends "base.html" %}
-{% load humanize static %}
+{% load currency humanize i18n static %}
 
 {% block title %}{{ car.brand }} {{ car.model }} · rentCarKom{% endblock %}
 
 {% block content %}
-  <p><a class="back" href="{% url 'catalog' %}">Back to cars</a></p>
+  <p><a class="back" href="{% url 'catalog' %}">{% trans "Back to cars" %}</a></p>
 
   <article class="detail">
     <div class="gallery" data-gallery>
       {% if car.photos.all %}
         <div class="stage">
           {% if car.photos.count > 1 %}
-            <button type="button" class="photo-arrow prev" data-dir="-1" aria-label="Previous photo">‹</button>
+            <button type="button" class="photo-arrow prev" data-dir="-1" aria-label="{% trans 'Previous photo' %}">‹</button>
           {% endif %}
-          <button type="button" class="photo-frame" data-fullscreen aria-label="Open photo fullscreen">
+          <button type="button" class="photo-frame" data-fullscreen aria-label="{% trans 'Open photo fullscreen' %}">
             <img class="hero" src="{{ car.photos.first.image.url }}" alt="{{ car.brand }} {{ car.model }}">
           </button>
           {% if car.photos.count > 1 %}
-            <button type="button" class="photo-arrow next" data-dir="1" aria-label="Next photo">›</button>
+            <button type="button" class="photo-arrow next" data-dir="1" aria-label="{% trans 'Next photo' %}">›</button>
           {% endif %}
         </div>
         {% if car.photos.count > 1 %}
           <p class="photo-count"><span data-index>1</span> / {{ car.photos.count }}</p>
           <div class="thumbs">
             {% for photo in car.photos.all %}
-              <button type="button" class="thumb-btn{% if forloop.first %} is-active{% endif %}" data-src="{{ photo.image.url }}" aria-label="Photo {{ forloop.counter }}">
+              <button type="button" class="thumb-btn{% if forloop.first %} is-active{% endif %}" data-src="{{ photo.image.url }}" aria-label="{% blocktrans with number=forloop.counter %}Photo {{ number }}{% endblocktrans %}">
                 <img src="{{ photo.image.url }}" alt="">
               </button>
             {% endfor %}
           </div>
         {% endif %}
         <div class="lightbox" data-lightbox hidden>
-          <button type="button" class="lightbox-close" data-close aria-label="Close">×</button>
+          <button type="button" class="lightbox-close" data-close aria-label="{% trans 'Close' %}">×</button>
           {% if car.photos.count > 1 %}
-            <button type="button" class="photo-arrow prev" data-dir="-1" aria-label="Previous photo">‹</button>
-            <button type="button" class="photo-arrow next" data-dir="1" aria-label="Next photo">›</button>
+            <button type="button" class="photo-arrow prev" data-dir="-1" aria-label="{% trans 'Previous photo' %}">‹</button>
+            <button type="button" class="photo-arrow next" data-dir="1" aria-label="{% trans 'Next photo' %}">›</button>
           {% endif %}
           <img class="lightbox-photo" src="{{ car.photos.first.image.url }}" alt="{{ car.brand }} {{ car.model }}">
           {% if car.photos.count > 1 %}
@@ -45,52 +45,53 @@
           [{% for photo in car.photos.all %}"{{ photo.image.url|escapejs }}"{% if not forloop.last %},{% endif %}{% endfor %}]
         </script>
       {% else %}
-        <div class="hero placeholder">No photos yet</div>
+        <div class="hero placeholder">{% trans "No photos yet" %}</div>
       {% endif %}
     </div>
 
     <div class="detail-head">
       <div>
         <h1>{{ car.brand }} {{ car.model }}</h1>
-        <p class="price">${{ car.price|floatformat:"-2" }} / day</p>
+        <p class="price">{{ car.price|money }} / {% trans "day" %}</p>
       </div>
       {% if car.is_rented %}
-        <span class="chip rented">Currently Rented</span>
+        <span class="chip rented">{% trans "Currently Rented" %}</span>
       {% else %}
-        <span class="chip free">Available for Rent</span>
+        <span class="chip free">{% trans "Available for Rent" %}</span>
       {% endif %}
     </div>
 
     <dl class="specs">
-      <div><dt>Plate</dt><dd>{{ car.plate }}</dd></div>
-      <div><dt>Year</dt><dd>{{ car.year }}</dd></div>
-      <div><dt>Seats</dt><dd>{{ car.seats }}</dd></div>
-      <div><dt>Transmission</dt><dd>{{ car.transmission }}</dd></div>
-      <div><dt>Fuel</dt><dd>{{ car.fuel }}</dd></div>
-      <div><dt>Color</dt><dd>{{ car.color|default:"—" }}</dd></div>
-      <div><dt>Mileage</dt><dd>{{ car.mileage|intcomma }} km</dd></div>
+      <div><dt>{% trans "Plate" %}</dt><dd>{{ car.plate }}</dd></div>
+      <div><dt>{% trans "Year" %}</dt><dd>{{ car.year }}</dd></div>
+      <div><dt>{% trans "Seats" %}</dt><dd>{{ car.seats }}</dd></div>
+      <div><dt>{% trans "Transmission" %}</dt><dd>{{ car.transmission|tr }}</dd></div>
+      <div><dt>{% trans "Fuel" %}</dt><dd>{{ car.fuel|tr }}</dd></div>
+      <div><dt>{% trans "Class" %}</dt><dd>{{ car.car_class|tr }}</dd></div>
+      <div><dt>{% trans "Color" %}</dt><dd>{{ car.color|default:"—" }}</dd></div>
+      <div><dt>{% trans "Mileage" %}</dt><dd>{{ car.mileage|intcomma }} {% trans "km" %}</dd></div>
     </dl>
 
-    <h2>Description</h2>
+    <h2>{% trans "Description" %}</h2>
     <p>{{ car.description|default:"—" }}</p>
 
     {% if active_rental and user.is_authenticated and user.is_staff_role %}
       <section class="panel">
-        <h2>Active Rental</h2>
-        <p>Renter: {{ active_rental.renter_name }} ({{ active_rental.user_email }})</p>
-        <p>From: {{ active_rental.start_datetime|date:"Y-m-d H:i" }}</p>
-        <p>Until: {{ active_rental.end_datetime|date:"Y-m-d H:i" }}</p>
-        <p><strong>Total: ${{ active_rental.total_price|floatformat:"-2" }}</strong></p>
+        <h2>{% trans "Active Rental" %}</h2>
+        <p>{% trans "Renter:" %} {{ active_rental.renter_name }} ({{ active_rental.user_email }})</p>
+        <p>{% trans "From:" %} {{ active_rental.start_datetime|date:"Y-m-d H:i" }}</p>
+        <p>{% trans "Until:" %} {{ active_rental.end_datetime|date:"Y-m-d H:i" }}</p>
+        <p><strong>{% trans "Total:" %} {{ active_rental.total_price|money }}</strong></p>
         <div class="actions">
           <form method="post" action="{% url 'rental_complete' active_rental.pk %}">
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ request.path }}">
-            <button class="button" type="submit">Mark Completed</button>
+            <button class="button" type="submit">{% trans "Mark Completed" %}</button>
           </form>
           <form method="post" action="{% url 'rental_cancel' active_rental.pk %}">
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ request.path }}">
-            <button class="button danger" type="submit">Cancel Rental</button>
+            <button class="button danger" type="submit">{% trans "Cancel Rental" %}</button>
           </form>
         </div>
       </section>
@@ -98,47 +99,53 @@
 
     {% if not user.is_authenticated %}
       <section class="panel">
-        <p>Log in to rent this car</p>
+        <p>{% trans "Log in to rent this car" %}</p>
         {% url 'login' as login_url %}
-        <a class="button" href="{% if login_url %}{{ login_url }}{% else %}/accounts/login/{% endif %}?next={{ request.path|urlencode }}">Go to Login</a>
+        <a class="button" href="{% if login_url %}{{ login_url }}{% else %}/accounts/login/{% endif %}?next={{ request.path|urlencode }}">{% trans "Go to Login" %}</a>
       </section>
     {% elif car.is_rented %}
       <section class="panel">
-        <button class="button" type="button" disabled>Currently Unavailable</button>
+        <button class="button" type="button" disabled>{% trans "Currently Unavailable" %}</button>
       </section>
     {% elif not user.profile_is_complete %}
       <section class="panel">
-        <p>Add your phone, RNOKPP, and driver license in your profile before renting.</p>
-        <a class="button" href="{% url 'profile' %}">Open profile</a>
+        <p>{% trans "Add your phone, RNOKPP, and driver license in your profile before renting." %}</p>
+        <a class="button" href="{% url 'profile' %}">{% trans "Open profile" %}</a>
       </section>
     {% else %}
       <form class="form-card" method="post" action="{% url 'rent_car' car.pk %}">
         {% csrf_token %}
-        <h2>Book This Car</h2>
-        <p>Renter from your profile: <strong>{{ user.name }}</strong></p>
+        <h2>{% trans "Book This Car" %}</h2>
+        <p>{% trans "Renter from your profile:" %} <strong>{{ user.name }}</strong></p>
         <p class="muted">{{ user.email }}</p>
-        <p class="muted">{{ user.phone }} · RNOKPP {{ user.rnokpp }}</p>
-        <p class="muted">Driver license {{ user.driver_license }} · <a href="{% url 'profile' %}">Open profile</a></p>
+        <p class="muted">{{ user.phone }} · {% trans "RNOKPP" %} {{ user.rnokpp }}</p>
+        <p class="muted">{% trans "Driver license" %} {{ user.driver_license }} · <a href="{% url 'profile' %}">{% trans "Open profile" %}</a></p>
         <label class="field">
-          Number of days
+          {% trans "Number of days" %}
           <input type="number" name="days" min="1" value="1" required>
         </label>
-        <button class="button" type="submit">Rent This Car</button>
+        <button class="button" type="submit">{% trans "Rent This Car" %}</button>
       </form>
     {% endif %}
 
     {% if my_rentals %}
       <section class="panel">
-        <h2>My Rentals for This Car</h2>
+        <h2>{% trans "My Rentals for This Car" %}</h2>
         {% for rental in my_rentals %}
           <article class="card rental-card">
             <div class="card-body">
               <div class="card-title">
                 <strong>{{ rental.renter_name }}</strong>
-                <span class="chip {{ rental.status }}">{{ rental.status|upper }}</span>
+                <span class="chip {{ rental.status }}">{{ rental.status|upper|tr }}</span>
               </div>
               <p class="muted">{{ rental.start_datetime|date:"Y-m-d" }} → {{ rental.end_datetime|date:"Y-m-d" }}</p>
-              <p>{{ rental.days }} days · ${{ rental.total_price|floatformat:"-2" }}</p>
+              <p>{% blocktrans count counter=rental.days %}{{ counter }} day{% plural %}{{ counter }} days{% endblocktrans %} · {{ rental.total_price|money }}</p>
+              {% if rental.status == "active" %}
+                <form method="post" action="{% url 'rental_cancel_own' rental.pk %}">
+                  {% csrf_token %}
+                  <button class="button danger" type="submit">{% trans "Cancel rental" %}</button>
+                </form>
+              {% endif %}
             </div>
           </article>
         {% endfor %}
@@ -147,16 +154,30 @@
 
     {% if user.is_authenticated and user.is_admin_role %}
       <section class="panel">
-        <h2>Admin Controls</h2>
+        <h2>{% trans "Admin Controls" %}</h2>
+        <p class="actions"><a class="button" href="{% url 'car_edit' car.pk %}">{% trans "Edit Car" %}</a></p>
+        {% if car.photos.all %}
+          <div class="photo-manage">
+            {% for photo in car.photos.all %}
+              <figure>
+                <img src="{{ photo.image.url }}" alt="">
+                <form method="post" action="{% url 'car_delete_photo' car.pk photo.pk %}">
+                  {% csrf_token %}
+                  <button class="button danger" type="submit">{% trans "Delete photo" %}</button>
+                </form>
+              </figure>
+            {% endfor %}
+          </div>
+        {% endif %}
         <form method="post" action="{% url 'car_add_photos' car.pk %}" enctype="multipart/form-data">
           {% csrf_token %}
           <label class="field">
-            Add photos
+            {% trans "Add photos" %}
             <input type="file" name="photos" accept="image/*" multiple>
           </label>
-          <button class="button secondary" type="submit">Add Photos</button>
+          <button class="button secondary" type="submit">{% trans "Add Photos" %}</button>
         </form>
-        <p class="actions"><a class="button danger" href="{% url 'car_delete' car.pk %}">Delete Car</a></p>
+        <p class="actions"><a class="button danger" href="{% url 'car_delete' car.pk %}">{% trans "Delete Car" %}</a></p>
       </section>
     {% endif %}
   </article>
