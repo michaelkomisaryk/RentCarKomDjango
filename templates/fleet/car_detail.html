@@ -51,7 +51,7 @@
 
     <div class="detail-head">
       <div>
-        <h1>{{ car.brand }} {{ car.model }}</h1>
+        <h1>{% car_title car %}</h1>
         <p class="price">{{ car.price|money }} / {% trans "day" %}</p>
       </div>
       {% if car.is_rented %}
