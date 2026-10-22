@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from fleet.models import Car, CarPhoto
+from fleet.models import Car, CarPhoto, Review
 
 
 class CarPhotoInline(admin.TabularInline):
@@ -18,3 +18,9 @@ class CarAdmin(admin.ModelAdmin):
 @admin.register(CarPhoto)
 class CarPhotoAdmin(admin.ModelAdmin):
     list_display = ("car", "image", "created_at")
+
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ("car", "author", "rating", "created_at")
+    search_fields = ("text", "car__brand", "car__model", "author__email")

@@ -84,3 +84,21 @@ class CarPhoto(models.Model):
 
     def __str__(self):
         return f"Photo of {self.car}"
+
+
+class Review(models.Model):
+    car = models.ForeignKey(Car, related_name="reviews", on_delete=models.CASCADE)
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="reviews",
+        on_delete=models.CASCADE,
+    )
+    text = models.TextField()
+    rating = models.PositiveSmallIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.rating}/5 · {self.car}"
