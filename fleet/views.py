@@ -188,7 +188,7 @@ class CarPhotoDeleteView(LoginRequiredMixin, AdminRequiredMixin, View):
 def fleet_summary(request):
     if not request.user.is_authenticated:
         return redirect_to_login(request.get_full_path())
-    if not request.user.is_staff_role:
+    if not request.user.groups.filter(name__in=("admin", "manager")).exists():
         return HttpResponseForbidden()
     summary = Car.objects.aggregate(total=Count("id"), average_price=Avg("price"))
     if summary["average_price"] is None:

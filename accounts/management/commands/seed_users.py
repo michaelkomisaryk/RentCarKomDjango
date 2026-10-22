@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
 
+from accounts.groups import sync_user_groups
 from accounts.models import Role, User
 
 
@@ -43,3 +44,4 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.SUCCESS(f"Created {user.email}"))
             else:
                 self.stdout.write(f"Already exists: {user.email}")
+            sync_user_groups(user)
