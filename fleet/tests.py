@@ -324,3 +324,17 @@ class OtherModelPageTests(TestCase):
         reviews = self.client.get(reverse("fleet:review_list"))
         self.assertContains(reviews, "Quiet car")
         self.assertContains(self.client.get(reverse("fleet:review_detail", args=[review.pk])), "Quiet car")
+
+    def test_summary_is_a_staff_only_function_view(self):
+        guest = self.client.get(reverse("fleet:summary"))
+        self.assertRedirects(guest, f"{reverse('accounts:login')}?next={reverse('fleet:summary')}")
+
+        client = make_user("summary-client@example.com", Role.CLIENT)
+        self.client.force_login(client)
+        self.assertEqual(self.client.get(reverse("fleet:summary")).status_code, 403)
+
+        admin = make_user("summary-admin@example.com", Role.ADMIN)
+        self.client.force_login(admin)
+        page = self.client.get(reverse("fleet:summary"))
+        self.assertContains(page, "Fleet summary")
+        self.assertContains(page, "Total Cars")

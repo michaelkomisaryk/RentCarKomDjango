@@ -1,7 +1,9 @@
 from django.apps import apps
 from django.contrib import messages
-from django.db.models import ProtectedError
-from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth.views import redirect_to_login
+from django.db.models import Avg, Count, ProtectedError
+from django.http import HttpResponseForbidden
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.translation import gettext as _
@@ -174,6 +176,17 @@ class CarPhotoDeleteView(AdminRequiredMixin, View):
         if url_has_allowed_host_and_scheme(target, allowed_hosts={request.get_host()}):
             return redirect(target)
         return redirect("fleet:car_detail", pk=pk)
+
+
+def fleet_summary(request):
+    if not request.user.is_authenticated:
+        return redirect_to_login(request.get_full_path())
+    if not request.user.is_staff_role:
+        return HttpResponseForbidden()
+    summary = Car.objects.aggregate(total=Count("id"), average_price=Avg("price"))
+    if summary["average_price"] is None:
+        summary["average_price"] = 0
+    return render(request, "fleet/summary.html", {"summary": summary})
 
 
 class CarPhotoListView(ListView):

@@ -24,7 +24,10 @@
       <div class="stat"><strong>{{ stats.available }}</strong>{% trans "Available" %}</div>
       <div class="stat"><strong>{{ stats.all_rentals }}</strong>{% trans "All Rentals" %}</div>
     </section>
-    <p><a href="{% url 'rentals:rental_list' %}">{% trans "All Rentals" %}</a></p>
+    <p class="d-flex gap-3">
+      <a href="{% url 'rentals:rental_list' %}">{% trans "All Rentals" %}</a>
+      <a href="{% url 'fleet:summary' %}">{% trans "Fleet summary" %}</a>
+    </p>
   {% endif %}
 
   <form class="filters" method="get">

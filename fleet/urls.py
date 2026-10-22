@@ -12,6 +12,7 @@ from fleet.views import (
     CarUpdateView,
     ReviewDetailView,
     ReviewListView,
+    fleet_summary,
 )
 
 app_name = "fleet"
@@ -28,6 +29,7 @@ urlpatterns = [
         CarPhotoDeleteView.as_view(),
         name="car_delete_photo",
     ),
+    path("fleet/summary/", fleet_summary, name="summary"),
     path("fleet/photos/", CarPhotoListView.as_view(), name="photo_list"),
     path("fleet/photos/<int:pk>/", CarPhotoDetailView.as_view(), name="photo_detail"),
     path("fleet/reviews/", ReviewListView.as_view(), name="review_list"),
