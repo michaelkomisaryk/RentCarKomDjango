@@ -1,0 +1,12 @@
+{% load i18n %}
+{% if is_paginated %}
+  <nav class="d-flex gap-2 justify-content-center align-items-center mt-4" aria-label="{% trans 'Pages' %}">
+    {% if page_obj.has_previous %}
+      <a class="button secondary" href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ page_obj.previous_page_number }}">{% trans "Previous" %}</a>
+    {% endif %}
+    <span>{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+      <a class="button secondary" href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ page_obj.next_page_number }}">{% trans "Next" %}</a>
+    {% endif %}
+  </nav>
+{% endif %}

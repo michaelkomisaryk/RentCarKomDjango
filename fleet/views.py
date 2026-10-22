@@ -20,6 +20,7 @@ from fleet.queries import annotate_availability, catalog_cars
 class CarListView(ListView):
     template_name = "fleet/catalog.html"
     context_object_name = "cars"
+    paginate_by = 12
 
     def get_queryset(self):
         return catalog_cars(
@@ -193,6 +194,7 @@ class CarPhotoListView(ListView):
     model = CarPhoto
     template_name = "fleet/photo_list.html"
     context_object_name = "photos"
+    paginate_by = 12
 
     def get_queryset(self):
         return CarPhoto.objects.select_related("car").order_by("-created_at")
@@ -211,6 +213,7 @@ class ReviewListView(ListView):
     model = Review
     template_name = "fleet/review_list.html"
     context_object_name = "reviews"
+    paginate_by = 10
 
     def get_queryset(self):
         return Review.objects.select_related("car", "author")

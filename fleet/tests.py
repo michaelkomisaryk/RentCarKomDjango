@@ -54,9 +54,11 @@ class CatalogTests(TestCase):
         response = self.client.get("/")
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.context["cars"]), 40)
+        self.assertEqual(response.context["paginator"].count, 40)
+        self.assertEqual(len(response.context["cars"]), 12)
         self.assertContains(response, "Toyota")
-        self.assertContains(response, "Sportage")
+        self.assertContains(response, "Next")
+        self.assertContains(self.client.get("/", {"q": "sportage"}), "Sportage")
 
     def test_fuel_filter_keeps_matching_cars(self):
         response = self.client.get("/", {"fuel": "Hybrid"})

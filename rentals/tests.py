@@ -84,7 +84,7 @@ class RentalFlowTests(TestCase):
         self.assertEqual(rental.price_per_day, 28)
 
         available = self.client.get(reverse("fleet:catalog"), {"available": "1"})
-        plates = [car.plate for car in available.context["cars"]]
+        plates = [car.plate for car in available.context["paginator"].object_list]
         self.assertNotIn("KA 2401 IK", plates)
         self.assertEqual(len(plates), 39)
 

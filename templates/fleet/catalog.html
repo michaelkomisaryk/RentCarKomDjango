@@ -80,7 +80,7 @@
 
   <div class="cards">
     {% for car in cars %}
-      <a class="card" href="{% url 'fleet:car_detail' car.pk %}">
+      <a class="card" href="{{ car.get_absolute_url }}">
         <div class="thumb">
           {% with photo=car.photos.first %}
             {% if photo %}
@@ -108,4 +108,5 @@
       </a>
     {% endfor %}
   </div>
+  {% include "includes/pagination.html" %}
 {% endblock %}

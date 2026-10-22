@@ -56,6 +56,7 @@ class RentCarView(LoginRequiredMixin, View):
 class RentalListView(StaffRoleRequiredMixin, ListView):
     template_name = "rentals/rental_list.html"
     context_object_name = "rentals"
+    paginate_by = 10
 
     def get_queryset(self):
         status = self.request.GET.get("status", "all")

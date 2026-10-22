@@ -11,7 +11,7 @@
   {% endif %}
   <div class="cards">
     {% for review in reviews %}
-      <a class="card" href="{% url 'fleet:review_detail' review.pk %}">
+      <a class="card" href="{{ review.get_absolute_url }}">
         <div class="card-body">
           <strong>{% car_title review.car %}</strong>
           <p>{{ review.rating }}/5</p>
@@ -20,4 +20,5 @@
       </a>
     {% endfor %}
   </div>
+  {% include "includes/pagination.html" %}
 {% endblock %}

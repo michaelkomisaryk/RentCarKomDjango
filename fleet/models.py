@@ -1,6 +1,7 @@
 from django.apps import apps
 from django.conf import settings
 from django.db import models
+from django.urls import reverse
 
 
 class Fuel(models.TextChoices):
@@ -65,6 +66,9 @@ class Car(models.Model):
     def __str__(self):
         return f"{self.brand} {self.model}"
 
+    def get_absolute_url(self):
+        return reverse("fleet:car_detail", kwargs={"pk": self.pk})
+
     @property
     def is_rented(self):
         count = getattr(self, "active_rental_count", None)
@@ -86,6 +90,9 @@ class CarPhoto(models.Model):
     def __str__(self):
         return f"Photo of {self.car}"
 
+    def get_absolute_url(self):
+        return reverse("fleet:photo_detail", kwargs={"pk": self.pk})
+
 
 class Review(models.Model):
     car = models.ForeignKey(Car, related_name="reviews", on_delete=models.CASCADE)
@@ -103,3 +110,6 @@ class Review(models.Model):
 
     def __str__(self):
         return f"{self.rating}/5 · {self.car}"
+
+    def get_absolute_url(self):
+        return reverse("fleet:review_detail", kwargs={"pk": self.pk})

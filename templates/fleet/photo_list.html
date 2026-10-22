@@ -11,7 +11,7 @@
   {% endif %}
   <div class="cards">
     {% for photo in photos %}
-      <a class="card" href="{% url 'fleet:photo_detail' photo.pk %}">
+      <a class="card" href="{{ photo.get_absolute_url }}">
         <div class="thumb">
           <img src="{{ photo.image.url }}" alt="{% car_title photo.car %}" loading="lazy">
         </div>
@@ -22,4 +22,5 @@
       </a>
     {% endfor %}
   </div>
+  {% include "includes/pagination.html" %}
 {% endblock %}
