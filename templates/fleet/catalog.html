@@ -8,6 +8,10 @@
     <p class="eyebrow">{% trans "The fleet" %}</p>
     <h1>{% trans "Available Cars" %}</h1>
     <p class="lede">{% trans "Choose a car, check the plate, and book it for as many days as you need." %}</p>
+    <p class="d-flex gap-3">
+      <a href="{% url 'fleet:photo_list' %}">{% trans "Photos" %}</a>
+      <a href="{% url 'fleet:review_list' %}">{% trans "Reviews" %}</a>
+    </p>
   </header>
   {% if user.is_authenticated and user.is_admin_role %}
     <p><a class="button" href="{% url 'fleet:car_create' %}">{% trans "Add Car" %}</a></p>

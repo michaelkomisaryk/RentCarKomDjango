@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load currency i18n %}
+
+{% block title %}{% trans "Photos" %} · rentCarKom{% endblock %}
+
+{% block content %}
+  <p><a class="back" href="{% url 'fleet:catalog' %}">{% trans "Back to cars" %}</a></p>
+  <h1>{% trans "Photos" %}</h1>
+  {% if not photos %}
+    <p class="empty">{% trans "No photos yet" %}</p>
+  {% endif %}
+  <div class="cards">
+    {% for photo in photos %}
+      <a class="card" href="{% url 'fleet:photo_detail' photo.pk %}">
+        <div class="thumb">
+          <img src="{{ photo.image.url }}" alt="{% car_title photo.car %}" loading="lazy">
+        </div>
+        <div class="card-body">
+          <strong>{% car_title photo.car %}</strong>
+          <p class="muted">{{ photo.created_at|date:"Y-m-d" }}</p>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+{% endblock %}

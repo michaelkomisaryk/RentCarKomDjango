@@ -162,3 +162,12 @@ class RentalFlowTests(TestCase):
         self.assertEqual(rental.status, Rental.Status.CANCELLED)
         self.car.refresh_from_db()
         self.assertFalse(self.car.is_rented)
+
+    def test_rental_detail_is_only_for_staff(self):
+        rental = create_rental(self.car, self.client_user, 2, "Renter")
+        self.client.force_login(self.client_user)
+        self.assertEqual(self.client.get(reverse("rentals:rental_detail", args=[rental.pk])).status_code, 403)
+
+        self.client.force_login(self.manager)
+        page = self.client.get(reverse("rentals:rental_detail", args=[rental.pk]))
+        self.assertContains(page, "KA 2401 IK")

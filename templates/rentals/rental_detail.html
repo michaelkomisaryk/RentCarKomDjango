@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load currency i18n %}
+
+{% block title %}{{ rental.car_brand }} {{ rental.car_model }} · rentCarKom{% endblock %}
+
+{% block content %}
+  <p><a class="back" href="{% url 'rentals:rental_list' %}">{% trans "All Rentals" %}</a></p>
+  <h1>{{ rental.car_brand }} {{ rental.car_model }}</h1>
+  <p class="muted">{% trans "Plate:" %} {{ rental.car_plate }}</p>
+  <p>{{ rental.renter_name }} ({{ rental.user_email }})</p>
+  <p>{{ rental.status|upper|tr }}</p>
+  <p>
+    {{ rental.start_datetime|date:"Y-m-d H:i" }} → {{ rental.end_datetime|date:"Y-m-d H:i" }}
+  </p>
+  <p>{% blocktrans count counter=rental.days %}{{ counter }} day{% plural %}{{ counter }} days{% endblocktrans %} · {{ rental.total_price|money }}</p>
+{% endblock %}

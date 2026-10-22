@@ -14,7 +14,7 @@ from django.utils import translation
 
 from accounts.models import Role, User
 from fleet.currency import format_money
-from fleet.models import Car, CarPhoto
+from fleet.models import Car, CarPhoto, Review
 
 MEDIA_ROOT = tempfile.mkdtemp()
 
@@ -299,3 +299,28 @@ class AdminCarTests(TestCase):
 
         self.client.force_login(client)
         self.assertNotContains(self.client.get(reverse("fleet:catalog")), "Add Car")
+
+
+@override_settings(MEDIA_ROOT=MEDIA_ROOT)
+class OtherModelPageTests(TestCase):
+    def test_photo_and_review_have_list_and_detail_pages(self):
+        author = make_user("reviewer@example.com", Role.CLIENT)
+        car = Car.objects.create(
+            brand="Fiat",
+            model="500",
+            year=2019,
+            price="30",
+            plate="FT 900 KK",
+            fuel="Gasoline",
+            transmission="Manual",
+        )
+        photo = CarPhoto.objects.create(car=car, image=tiny_png())
+        review = Review.objects.create(car=car, author=author, text="Quiet car", rating=5)
+
+        photos = self.client.get(reverse("fleet:photo_list"))
+        self.assertContains(photos, "Fiat 500")
+        self.assertContains(self.client.get(reverse("fleet:photo_detail", args=[photo.pk])), "Fiat 500")
+
+        reviews = self.client.get(reverse("fleet:review_list"))
+        self.assertContains(reviews, "Quiet car")
+        self.assertContains(self.client.get(reverse("fleet:review_detail", args=[review.pk])), "Quiet car")

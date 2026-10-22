@@ -11,7 +11,7 @@ from django.views.generic import CreateView, DeleteView, DetailView, ListView, U
 
 from accounts.mixins import AdminRequiredMixin
 from fleet.forms import CarForm
-from fleet.models import Car, CarClass, CarPhoto, Fuel, Transmission
+from fleet.models import Car, CarClass, CarPhoto, Fuel, Review, Transmission
 from fleet.queries import annotate_availability, catalog_cars
 
 
@@ -174,3 +174,39 @@ class CarPhotoDeleteView(AdminRequiredMixin, View):
         if url_has_allowed_host_and_scheme(target, allowed_hosts={request.get_host()}):
             return redirect(target)
         return redirect("fleet:car_detail", pk=pk)
+
+
+class CarPhotoListView(ListView):
+    model = CarPhoto
+    template_name = "fleet/photo_list.html"
+    context_object_name = "photos"
+
+    def get_queryset(self):
+        return CarPhoto.objects.select_related("car").order_by("-created_at")
+
+
+class CarPhotoDetailView(DetailView):
+    model = CarPhoto
+    template_name = "fleet/photo_detail.html"
+    context_object_name = "photo"
+
+    def get_queryset(self):
+        return CarPhoto.objects.select_related("car")
+
+
+class ReviewListView(ListView):
+    model = Review
+    template_name = "fleet/review_list.html"
+    context_object_name = "reviews"
+
+    def get_queryset(self):
+        return Review.objects.select_related("car", "author")
+
+
+class ReviewDetailView(DetailView):
+    model = Review
+    template_name = "fleet/review_detail.html"
+    context_object_name = "review"
+
+    def get_queryset(self):
+        return Review.objects.select_related("car", "author")

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load currency i18n %}
+
+{% block title %}{% car_title photo.car %} · rentCarKom{% endblock %}
+
+{% block content %}
+  <p><a class="back" href="{% url 'fleet:photo_list' %}">{% trans "Photos" %}</a></p>
+  <h1>{% car_title photo.car %}</h1>
+  <img src="{{ photo.image.url }}" alt="{% car_title photo.car %}">
+  <p><a href="{% url 'fleet:car_detail' photo.car.pk %}">{% trans "View Details" %}</a></p>
+{% endblock %}

@@ -28,7 +28,7 @@
       <article class="card rental-card">
         <div class="card-body">
           <div class="card-title">
-            <strong>{{ rental.car_brand }} {{ rental.car_model }}</strong>
+            <strong><a href="{% url 'rentals:rental_detail' rental.pk %}">{{ rental.car_brand }} {{ rental.car_model }}</a></strong>
             <span class="chip {{ rental.status }}">{{ rental.status|upper|tr }}</span>
           </div>
           <p class="muted">{% trans "Plate:" %} {{ rental.car_plate }}</p>

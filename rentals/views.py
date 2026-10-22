@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.translation import gettext as _
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import DetailView, ListView
 
 from fleet.currency import format_money
 
@@ -69,6 +69,15 @@ class RentalListView(StaffRoleRequiredMixin, ListView):
         context["status"] = self.request.GET.get("status", "all")
         context["statuses"] = ["all", *Rental.Status.values]
         return context
+
+
+class RentalDetailView(StaffRoleRequiredMixin, DetailView):
+    model = Rental
+    template_name = "rentals/rental_detail.html"
+    context_object_name = "rental"
+
+    def get_queryset(self):
+        return Rental.objects.select_related("car", "user")
 
 
 class CancelOwnRentalView(LoginRequiredMixin, View):
