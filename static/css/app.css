@@ -14,6 +14,7 @@
   --danger: #b91c1c;
   --ok: #166534;
   --radius: 16px;
+  --watermark: #f97316;
   color-scheme: light;
 }
 
@@ -29,6 +30,7 @@
   --chip-rented: #fca5a5;
   --danger: #f87171;
   --ok: #86efac;
+  --watermark: #ffb36b;
   color-scheme: dark;
 }
 
@@ -43,6 +45,32 @@ body {
   background: var(--bg);
   color: var(--text);
   line-height: 1.5;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  z-index: 0;
+  left: 50%;
+  top: 46%;
+  width: min(88vmin, 820px);
+  height: min(88vmin, 820px);
+  transform: translate(-50%, -50%);
+  background: url("../brand/watermark-r.svg?v=4") center / 70% no-repeat;
+  filter: blur(8px);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+[data-theme="dark"] body::before {
+  opacity: 0.5;
+  filter: blur(10px);
+}
+
+.page,
+.site-footer {
+  position: relative;
+  z-index: 1;
 }
 
 body, .topbar, .card, .button, .field input, .field select, .field textarea, .filters {
