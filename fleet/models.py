@@ -61,6 +61,7 @@ class Car(models.Model):
         ordering = ["id"]
         verbose_name = "автомобіль"
         verbose_name_plural = "автомобілі"
+        permissions = [("manage_fleet", "Може керувати автопарком")]
 
     def delete(self, *args, **kwargs):
         photos = list(self.photos.all())

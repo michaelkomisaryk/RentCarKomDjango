@@ -36,6 +36,7 @@ class Rental(models.Model):
         ordering = ["-created_at"]
         verbose_name = "оренда"
         verbose_name_plural = "оренди"
+        permissions = [("manage_rentals", "Може керувати орендами")]
         constraints = [
             models.UniqueConstraint(
                 fields=["car"],
