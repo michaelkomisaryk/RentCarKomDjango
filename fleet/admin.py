@@ -18,6 +18,8 @@ class CarAdmin(admin.ModelAdmin):
 @admin.register(CarPhoto)
 class CarPhotoAdmin(admin.ModelAdmin):
     list_display = ("car", "image", "created_at")
+    list_filter = ("created_at",)
+    search_fields = ("car__brand", "car__model", "car__plate")
 
 
 @admin.register(Review)
