@@ -34,6 +34,8 @@ class Rental(models.Model):
 
     class Meta:
         ordering = ["-created_at"]
+        verbose_name = "оренда"
+        verbose_name_plural = "оренди"
         constraints = [
             models.UniqueConstraint(
                 fields=["car"],

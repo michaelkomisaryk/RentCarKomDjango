@@ -59,6 +59,8 @@ class Car(models.Model):
 
     class Meta:
         ordering = ["id"]
+        verbose_name = "автомобіль"
+        verbose_name_plural = "автомобілі"
 
     def delete(self, *args, **kwargs):
         photos = list(self.photos.all())
@@ -91,6 +93,8 @@ class CarPhoto(models.Model):
 
     class Meta:
         ordering = ["id"]
+        verbose_name = "фото автомобіля"
+        verbose_name_plural = "фото автомобілів"
 
     def __str__(self):
         return f"Photo of {self.car}"
@@ -112,6 +116,8 @@ class Review(models.Model):
 
     class Meta:
         ordering = ["-created_at"]
+        verbose_name = "відгук"
+        verbose_name_plural = "відгуки"
 
     def __str__(self):
         return f"{self.rating}/5 · {self.car}"
