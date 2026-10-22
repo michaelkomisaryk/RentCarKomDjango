@@ -24,17 +24,17 @@ def rental_end(start, days):
 @transaction.atomic
 def create_rental(car, user, days, renter_name):
     if days < 1:
-        raise RentalError(_("Enter at least 1 day"))
+        raise RentalError(_("Вкажіть щонайменше 1 добу."))
     name = (renter_name or "").strip()
     if not name:
-        raise RentalError(_("Renter name is required"))
+        raise RentalError(_("Вкажіть ім’я орендаря."))
 
     cars = Car.objects.all()
     if connection.features.has_select_for_update:
         cars = cars.select_for_update()
     locked = cars.get(pk=car.pk)
     if Rental.objects.filter(car=locked, status=Rental.Status.ACTIVE).exists():
-        raise RentalError(_("Car is already rented"))
+        raise RentalError(_("Автомобіль уже орендовано."))
 
     start = timezone.now()
     price = locked.price
@@ -59,7 +59,7 @@ def create_rental(car, user, days, renter_name):
                 status=Rental.Status.ACTIVE,
             )
     except IntegrityError as exc:
-        raise RentalError(_("Car is already rented")) from exc
+        raise RentalError(_("Автомобіль уже орендовано.")) from exc
 
 
 @transaction.atomic
@@ -69,7 +69,7 @@ def _set_status(rental, status, close_now):
         rentals = rentals.select_for_update()
     locked = rentals.get(pk=rental.pk)
     if locked.status != Rental.Status.ACTIVE:
-        raise RentalError(_("Only an active rental can be updated"))
+        raise RentalError(_("Оновити можна лише активну оренду."))
     locked.status = status
     fields = ["status"]
     if close_now:

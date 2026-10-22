@@ -53,16 +53,16 @@ class CarForm(forms.ModelForm):
         self.fields["color"].required = False
         self.fields["description"].required = False
         self.fields["seats"].initial = 5
-        self.fields["brand"].error_messages["required"] = _("Brand is required")
-        self.fields["model"].error_messages["required"] = _("Model is required")
-        self.fields["plate"].error_messages["required"] = _("License plate is required")
+        self.fields["brand"].error_messages["required"] = _("Вкажіть марку.")
+        self.fields["model"].error_messages["required"] = _("Вкажіть модель.")
+        self.fields["plate"].error_messages["required"] = _("Вкажіть номерний знак.")
         self.fields["year"].error_messages.update(
-            {"required": _("Valid year is required"), "invalid": _("Valid year is required")}
+            {"required": _("Вкажіть коректний рік."), "invalid": _("Вкажіть коректний рік.")}
         )
         self.fields["price"].error_messages.update(
             {
-                "required": _("Valid price is required"),
-                "invalid": _("Valid price is required"),
+                "required": _("Вкажіть коректну ціну."),
+                "invalid": _("Вкажіть коректну ціну."),
             }
         )
 
@@ -78,7 +78,7 @@ class CarForm(forms.ModelForm):
     def clean_year(self):
         year = self.cleaned_data["year"]
         if year < 1900 or year > 2100:
-            raise forms.ValidationError(_("Valid year is required"))
+            raise forms.ValidationError(_("Вкажіть коректний рік."))
         return year
 
     def clean_price(self):
@@ -86,7 +86,7 @@ class CarForm(forms.ModelForm):
         if uses_uah():
             price = uah_to_usd(price)
         if price <= 0:
-            raise forms.ValidationError(_("Valid price is required"))
+            raise forms.ValidationError(_("Вкажіть коректну ціну."))
         return price
 
     def clean_seats(self):

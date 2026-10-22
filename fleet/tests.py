@@ -176,8 +176,8 @@ class AdminCarTests(TestCase):
         )
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Valid year is required")
-        self.assertContains(response, "Valid price is required")
+        self.assertContains(response, "Вкажіть коректний рік.")
+        self.assertContains(response, "Вкажіть коректну ціну.")
         self.assertFalse(Car.objects.filter(plate="SK 0001 KK").exists())
 
     def test_ukrainian_price_is_stored_in_dollars(self):

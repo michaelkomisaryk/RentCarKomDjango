@@ -136,7 +136,7 @@ class CarDeleteView(AdminRequiredMixin, DeleteView):
         try:
             self.object.delete()
         except ProtectedError:
-            messages.error(self.request, _("This car has rentals and cannot be deleted."))
+            messages.error(self.request, _("Це авто має оренди, тому його не можна видалити."))
             return redirect("fleet:car_detail", pk=self.object.pk)
         messages.success(self.request, _("Car deleted"))
         return redirect(success_url)
@@ -147,7 +147,7 @@ class CarPhotoUploadView(AdminRequiredMixin, View):
         car = get_object_or_404(Car, pk=pk)
         images = [image for image in request.FILES.getlist("photos") if image]
         if not images:
-            messages.error(request, _("Choose at least one photo"))
+            messages.error(request, _("Оберіть хоча б одне фото."))
             return redirect("fleet:car_detail", pk=car.pk)
         for image in images:
             CarPhoto.objects.create(car=car, image=image)

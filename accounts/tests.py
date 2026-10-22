@@ -43,10 +43,10 @@ class AuthScreenTests(TestCase):
             reverse("accounts:login"),
             {"username": "admin@rentcarkom.com", "password": "nope"},
         )
-        self.assertContains(bad, "Invalid email or password")
+        self.assertContains(bad, "Невірна електронна пошта або пароль.")
 
         empty = self.client.post(reverse("accounts:login"), {"username": "", "password": ""})
-        self.assertContains(empty, "Please fill in all fields")
+        self.assertContains(empty, "Заповніть усі поля.")
 
         ok = self.client.post(
             reverse("accounts:login"),
@@ -97,7 +97,7 @@ class AuthScreenTests(TestCase):
                 "driver_license": "ВХА 123456",
             },
         )
-        self.assertContains(duplicate, "Email already registered")
+        self.assertContains(duplicate, "Ця електронна пошта вже зареєстрована.")
 
         short = self.client.post(
             reverse("accounts:register"),
@@ -110,7 +110,7 @@ class AuthScreenTests(TestCase):
                 "driver_license": "ВХА 123456",
             },
         )
-        self.assertContains(short, "Password must be at least 6 characters")
+        self.assertContains(short, "Пароль має містити щонайменше 6 символів.")
 
         self.client.login(email="new@example.com", password="secret1")
         page = self.client.get(reverse("fleet:catalog"))
@@ -183,7 +183,7 @@ class ProfileTests(TestCase):
                 "confirm_password": "newsecret",
             },
         )
-        self.assertContains(wrong, "Current password is incorrect")
+        self.assertContains(wrong, "Поточний пароль невірний.")
 
         mismatch = self.client.post(
             reverse("accounts:profile"),
@@ -194,7 +194,7 @@ class ProfileTests(TestCase):
                 "confirm_password": "other",
             },
         )
-        self.assertContains(mismatch, "Passwords do not match")
+        self.assertContains(mismatch, "Паролі не збігаються.")
 
         changed = self.client.post(
             reverse("accounts:profile"),

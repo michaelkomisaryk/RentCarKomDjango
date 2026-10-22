@@ -9,7 +9,7 @@ from accounts.validators import normalize_driver_license, normalize_phone, norma
 class EmailLoginForm(AuthenticationForm):
     error_messages = {
         **AuthenticationForm.error_messages,
-        "invalid_login": _("Invalid email or password"),
+        "invalid_login": _("Невірна електронна пошта або пароль."),
     }
 
     def __init__(self, *args, **kwargs):
@@ -22,7 +22,7 @@ class EmailLoginForm(AuthenticationForm):
         email = (self.data.get("username") or "").strip().lower()
         password = self.data.get("password") or ""
         if not email or not password:
-            raise forms.ValidationError(_("Please fill in all fields"))
+            raise forms.ValidationError(_("Заповніть усі поля."))
         self.cleaned_data["username"] = email
         self.cleaned_data["password"] = password
         return super().clean()
@@ -49,14 +49,14 @@ class RegisterForm(forms.Form):
         license_raw = (self.data.get("driver_license") or "").strip()
         password = self.data.get("password") or ""
         if not all([name, email_raw, phone_raw, rnokpp_raw, license_raw, password]):
-            raise forms.ValidationError(_("Please fill in all fields"))
+            raise forms.ValidationError(_("Заповніть усі поля."))
         if self.errors:
             return cleaned
         if len(password) < 6:
-            raise forms.ValidationError(_("Password must be at least 6 characters"))
+            raise forms.ValidationError(_("Пароль має містити щонайменше 6 символів."))
         email = email_raw.lower()
         if User.objects.filter(email=email).exists():
-            raise forms.ValidationError(_("Email already registered"))
+            raise forms.ValidationError(_("Ця електронна пошта вже зареєстрована."))
         cleaned["name"] = name
         cleaned["email"] = email
         cleaned["phone"] = normalize_phone(phone_raw)
@@ -83,7 +83,7 @@ class ProfileForm(forms.ModelForm):
     def clean_name(self):
         name = (self.cleaned_data.get("name") or "").strip()
         if not name:
-            raise forms.ValidationError(_("Name cannot be empty"))
+            raise forms.ValidationError(_("Ім’я не може бути порожнім."))
         return name
 
     def clean_phone(self):
@@ -108,7 +108,7 @@ class PasswordChangeForm(forms.Form):
     def clean_current_password(self):
         current = self.cleaned_data.get("current_password") or ""
         if not self.user.check_password(current):
-            raise forms.ValidationError(_("Current password is incorrect"))
+            raise forms.ValidationError(_("Поточний пароль невірний."))
         return current
 
     def clean(self):
@@ -116,9 +116,9 @@ class PasswordChangeForm(forms.Form):
         new_password = cleaned.get("new_password") or ""
         confirm_password = cleaned.get("confirm_password") or ""
         if new_password and len(new_password) < 6:
-            self.add_error("new_password", _("Password must be at least 6 characters"))
+            self.add_error("new_password", _("Пароль має містити щонайменше 6 символів."))
         if new_password and confirm_password and new_password != confirm_password:
-            self.add_error("confirm_password", _("Passwords do not match"))
+            self.add_error("confirm_password", _("Паролі не збігаються."))
         return cleaned
 
     def save(self):

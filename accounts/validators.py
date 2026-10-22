@@ -13,13 +13,13 @@ def normalize_phone(value):
         return f"+{digits}"
     if len(digits) == 10 and digits.startswith("0"):
         return f"+38{digits}"
-    raise ValidationError(_("Enter a Ukrainian phone number, for example +380671234567."))
+    raise ValidationError(_("Введіть український номер телефону, наприклад +380671234567."))
 
 
 def normalize_rnokpp(value):
     digits = re.sub(r"\D", "", value or "")
     if not re.fullmatch(r"\d{10}", digits):
-        raise ValidationError(_("RNOKPP must contain 10 digits."))
+        raise ValidationError(_("РНОКПП має містити 10 цифр."))
     return digits
 
 
@@ -29,8 +29,8 @@ def normalize_driver_license(value):
     if not match:
         raise ValidationError(
             _(
-                "Enter the series and number: ВХА 123456 for a new plastic license, "
-                "or КІА 654321 for an old laminated one."
+                "Введіть серію та номер: ВХА 123456 для нового пластикового посвідчення "
+                "або КІА 654321 для старого ламінованого."
             )
         )
     return f"{match.group(1)} {match.group(2)}"

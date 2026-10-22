@@ -78,7 +78,7 @@ class RentalFlowTests(TestCase):
             {"days": 1, "renter_name": "Grace"},
             follow=True,
         )
-        self.assertContains(second, "Car is already rented")
+        self.assertContains(second, "Автомобіль уже орендовано.")
         self.assertEqual(Rental.objects.filter(status=Rental.Status.ACTIVE).count(), 1)
         rental.refresh_from_db()
         self.assertEqual(rental.price_per_day, 28)
@@ -140,7 +140,7 @@ class RentalFlowTests(TestCase):
             {"days": 0, "renter_name": ""},
             follow=True,
         )
-        self.assertContains(rejected, "Enter at least 1 day")
+        self.assertContains(rejected, "Вкажіть щонайменше 1 добу.")
 
         with self.assertRaises(RentalError):
             create_rental(self.car, self.client_user, 1, "   ")

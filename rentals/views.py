@@ -21,7 +21,7 @@ class RentCarView(LoginRequiredMixin, View):
         if not request.user.profile_is_complete:
             messages.error(
                 request,
-                _("Add your phone, RNOKPP, and driver license in your profile before renting."),
+                _("Додайте телефон, РНОКПП і посвідчення водія в профілі, перш ніж орендувати."),
             )
             return redirect("accounts:profile")
         try:
