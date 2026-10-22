@@ -1,5 +1,6 @@
 from django.apps import apps
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import redirect_to_login
 from django.db.models import Avg, Count, ProtectedError
 from django.http import HttpResponseForbidden
@@ -85,7 +86,12 @@ class CarDetailView(DetailView):
         return context
 
 
-class CarCreateView(AdminRequiredMixin, CreateView):
+class OwnedCarMixin:
+    def get_queryset(self):
+        return Car.objects.filter(added_by=self.request.user)
+
+
+class CarCreateView(LoginRequiredMixin, AdminRequiredMixin, CreateView):
     model = Car
     form_class = CarForm
     template_name = "fleet/car_form.html"
@@ -107,7 +113,7 @@ class CarCreateView(AdminRequiredMixin, CreateView):
         return reverse("fleet:catalog")
 
 
-class CarUpdateView(AdminRequiredMixin, UpdateView):
+class CarUpdateView(LoginRequiredMixin, AdminRequiredMixin, OwnedCarMixin, UpdateView):
     model = Car
     form_class = CarForm
     template_name = "fleet/car_form.html"
@@ -128,7 +134,7 @@ class CarUpdateView(AdminRequiredMixin, UpdateView):
         return reverse("fleet:car_detail", kwargs={"pk": self.object.pk})
 
 
-class CarDeleteView(AdminRequiredMixin, DeleteView):
+class CarDeleteView(LoginRequiredMixin, AdminRequiredMixin, OwnedCarMixin, DeleteView):
     model = Car
     template_name = "fleet/car_confirm_delete.html"
     success_url = reverse_lazy("fleet:catalog")
@@ -145,9 +151,9 @@ class CarDeleteView(AdminRequiredMixin, DeleteView):
         return redirect(success_url)
 
 
-class CarPhotoUploadView(AdminRequiredMixin, View):
+class CarPhotoUploadView(LoginRequiredMixin, AdminRequiredMixin, View):
     def post(self, request, pk):
-        car = get_object_or_404(Car, pk=pk)
+        car = get_object_or_404(Car, pk=pk, added_by=request.user)
         images = [image for image in request.FILES.getlist("photos") if image]
         if not images:
             messages.error(request, _("Оберіть хоча б одне фото."))
@@ -166,9 +172,9 @@ class CarPhotoUploadView(AdminRequiredMixin, View):
         return redirect("fleet:car_detail", pk=car.pk)
 
 
-class CarPhotoDeleteView(AdminRequiredMixin, View):
+class CarPhotoDeleteView(LoginRequiredMixin, AdminRequiredMixin, View):
     def post(self, request, pk, photo_pk):
-        photo = get_object_or_404(CarPhoto, pk=photo_pk, car_id=pk)
+        photo = get_object_or_404(CarPhoto, pk=photo_pk, car_id=pk, car__added_by=request.user)
         if photo.image:
             photo.image.delete(save=False)
         photo.delete()

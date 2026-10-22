@@ -74,6 +74,8 @@ def _upsert(spec, admin):
         return car, True
     for key, value in fields.items():
         setattr(car, key, value)
+    if car.added_by_id is None and admin is not None:
+        car.added_by = admin
     car.save()
     return car, False
 

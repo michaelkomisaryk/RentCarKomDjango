@@ -206,6 +206,7 @@ class AdminCarTests(TestCase):
             plate="FT 500 KK",
             fuel="Gasoline",
             transmission="Manual",
+            added_by=admin,
         )
 
         upload = self.client.post(
@@ -232,6 +233,7 @@ class AdminCarTests(TestCase):
             fuel="Gasoline",
             transmission="Manual",
             car_class="Economy",
+            added_by=admin,
         )
         self.client.post(reverse("fleet:car_add_photos", args=[car.pk]), {"photos": [tiny_png("one.png"), tiny_png("two.png")]})
         photos = list(CarPhoto.objects.filter(car=car))
@@ -301,6 +303,24 @@ class AdminCarTests(TestCase):
 
         self.client.force_login(client)
         self.assertNotContains(self.client.get(reverse("fleet:catalog")), "Add Car")
+
+    def test_admin_cannot_change_another_admins_car(self):
+        owner = make_user("owner-admin@example.com", Role.ADMIN)
+        other = make_user("other-admin@example.com", Role.ADMIN)
+        car = Car.objects.create(
+            brand="Fiat",
+            model="500",
+            year=2019,
+            price="30",
+            plate="FT 777 KK",
+            fuel="Gasoline",
+            transmission="Manual",
+            added_by=owner,
+        )
+        self.client.force_login(other)
+        self.assertEqual(self.client.get(reverse("fleet:car_edit", args=[car.pk])).status_code, 404)
+        self.assertEqual(self.client.post(reverse("fleet:car_delete", args=[car.pk])).status_code, 404)
+        self.assertTrue(Car.objects.filter(pk=car.pk).exists())
 
 
 @override_settings(MEDIA_ROOT=MEDIA_ROOT)

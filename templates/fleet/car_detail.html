@@ -152,7 +152,7 @@
       </section>
     {% endif %}
 
-    {% if user.is_authenticated and user.is_admin_role %}
+    {% if user.is_authenticated and user.is_admin_role and car.added_by_id == user.id %}
       <section class="panel">
         <h2>{% trans "Admin Controls" %}</h2>
         <p class="actions"><a class="button" href="{% url 'fleet:car_edit' car.pk %}">{% trans "Edit Car" %}</a></p>
