@@ -11,6 +11,11 @@ def money(amount):
     return format_money(amount)
 
 
+@register.simple_tag
+def car_title(car):
+    return f"{car.brand} {car.model}"
+
+
 @register.filter
 def tr(value):
     if value in (None, ""):
