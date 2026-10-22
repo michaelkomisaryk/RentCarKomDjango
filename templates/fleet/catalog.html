@@ -10,7 +10,7 @@
     <p class="lede">{% trans "Choose a car, check the plate, and book it for as many days as you need." %}</p>
   </header>
   {% if user.is_authenticated and user.is_admin_role %}
-    <p><a class="button" href="{% url 'car_create' %}">{% trans "Add Car" %}</a></p>
+    <p><a class="button" href="{% url 'fleet:car_create' %}">{% trans "Add Car" %}</a></p>
   {% endif %}
 
   {% if stats %}
@@ -20,7 +20,7 @@
       <div class="stat"><strong>{{ stats.available }}</strong>{% trans "Available" %}</div>
       <div class="stat"><strong>{{ stats.all_rentals }}</strong>{% trans "All Rentals" %}</div>
     </section>
-    <p><a href="{% url 'rental_list' %}">{% trans "All Rentals" %}</a></p>
+    <p><a href="{% url 'rentals:rental_list' %}">{% trans "All Rentals" %}</a></p>
   {% endif %}
 
   <form class="filters" method="get">
@@ -73,7 +73,7 @@
 
   <div class="cards">
     {% for car in cars %}
-      <a class="card" href="{% url 'car_detail' car.pk %}">
+      <a class="card" href="{% url 'fleet:car_detail' car.pk %}">
         <div class="thumb">
           {% with photo=car.photos.first %}
             {% if photo %}

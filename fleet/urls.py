@@ -10,6 +10,8 @@ from fleet.views import (
     CarUpdateView,
 )
 
+app_name = "fleet"
+
 urlpatterns = [
     path("", CarListView.as_view(), name="catalog"),
     path("cars/<int:pk>/", CarDetailView.as_view(), name="car_detail"),

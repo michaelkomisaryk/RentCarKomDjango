@@ -23,7 +23,7 @@ class RentCarView(LoginRequiredMixin, View):
                 request,
                 _("Add your phone, RNOKPP, and driver license in your profile before renting."),
             )
-            return redirect("profile")
+            return redirect("accounts:profile")
         try:
             days = int(request.POST.get("days") or 0)
         except ValueError:
@@ -32,7 +32,7 @@ class RentCarView(LoginRequiredMixin, View):
             rental = create_rental(car, request.user, days, request.user.name)
         except RentalError as exc:
             messages.error(request, str(exc))
-            return redirect("car_detail", pk=car.pk)
+            return redirect("fleet:car_detail", pk=car.pk)
 
         messages.success(
             request,
@@ -50,7 +50,7 @@ class RentCarView(LoginRequiredMixin, View):
                 "id": rental.pk,
             },
         )
-        return redirect("catalog")
+        return redirect("fleet:catalog")
 
 
 class RentalListView(StaffRoleRequiredMixin, ListView):
@@ -80,7 +80,7 @@ class CancelOwnRentalView(LoginRequiredMixin, View):
             messages.error(request, str(exc))
         else:
             messages.success(request, _("Rental cancelled"))
-        return redirect("profile")
+        return redirect("accounts:profile")
 
 
 class RentalActionView(StaffRoleRequiredMixin, View):
@@ -100,7 +100,7 @@ class RentalActionView(StaffRoleRequiredMixin, View):
         return redirect(self._next_url(request))
 
     def _next_url(self, request):
-        target = request.POST.get("next") or reverse("rental_list")
+        target = request.POST.get("next") or reverse("rentals:rental_list")
         if url_has_allowed_host_and_scheme(target, allowed_hosts={request.get_host()}):
             return target
-        return reverse("rental_list")
+        return reverse("rentals:rental_list")

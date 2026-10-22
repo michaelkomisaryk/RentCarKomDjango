@@ -50,13 +50,13 @@
         <article class="card rental-card">
           <div class="card-body">
             <div class="card-title">
-              <a href="{% url 'car_detail' rental.car_id %}"><strong>{{ rental.car_brand }} {{ rental.car_model }}</strong></a>
+              <a href="{% url 'fleet:car_detail' rental.car_id %}"><strong>{{ rental.car_brand }} {{ rental.car_model }}</strong></a>
               <span class="chip active">{% trans "ACTIVE" %}</span>
             </div>
             <p class="muted">{% trans "Plate:" %} {{ rental.car_plate }}</p>
             <p class="muted">{{ rental.start_datetime|date:"Y-m-d H:i" }} → {{ rental.end_datetime|date:"Y-m-d H:i" }}</p>
             <p>{% blocktrans count counter=rental.days %}{{ counter }} day{% plural %}{{ counter }} days{% endblocktrans %} · {{ rental.total_price|money }}</p>
-            <form method="post" action="{% url 'rental_cancel_own' rental.pk %}">
+            <form method="post" action="{% url 'rentals:rental_cancel_own' rental.pk %}">
               {% csrf_token %}
               <button class="button danger" type="submit">{% trans "Cancel rental" %}</button>
             </form>

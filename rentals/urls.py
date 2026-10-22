@@ -2,6 +2,8 @@ from django.urls import path
 
 from rentals.views import CancelOwnRentalView, RentalActionView, RentalListView, RentCarView
 
+app_name = "rentals"
+
 urlpatterns = [
     path("cars/<int:pk>/rent/", RentCarView.as_view(), name="rent_car"),
     path("rentals/", RentalListView.as_view(), name="rental_list"),

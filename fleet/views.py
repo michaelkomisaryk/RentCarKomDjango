@@ -101,7 +101,7 @@ class CarCreateView(AdminRequiredMixin, CreateView):
         return response
 
     def get_success_url(self):
-        return reverse("catalog")
+        return reverse("fleet:catalog")
 
 
 class CarUpdateView(AdminRequiredMixin, UpdateView):
@@ -122,13 +122,13 @@ class CarUpdateView(AdminRequiredMixin, UpdateView):
         return response
 
     def get_success_url(self):
-        return reverse("car_detail", kwargs={"pk": self.object.pk})
+        return reverse("fleet:car_detail", kwargs={"pk": self.object.pk})
 
 
 class CarDeleteView(AdminRequiredMixin, DeleteView):
     model = Car
     template_name = "fleet/car_confirm_delete.html"
-    success_url = reverse_lazy("catalog")
+    success_url = reverse_lazy("fleet:catalog")
 
     def form_valid(self, form):
         self.object = self.get_object()
@@ -137,7 +137,7 @@ class CarDeleteView(AdminRequiredMixin, DeleteView):
             self.object.delete()
         except ProtectedError:
             messages.error(self.request, _("This car has rentals and cannot be deleted."))
-            return redirect("car_detail", pk=self.object.pk)
+            return redirect("fleet:car_detail", pk=self.object.pk)
         messages.success(self.request, _("Car deleted"))
         return redirect(success_url)
 
@@ -148,7 +148,7 @@ class CarPhotoUploadView(AdminRequiredMixin, View):
         images = [image for image in request.FILES.getlist("photos") if image]
         if not images:
             messages.error(request, _("Choose at least one photo"))
-            return redirect("car_detail", pk=car.pk)
+            return redirect("fleet:car_detail", pk=car.pk)
         for image in images:
             CarPhoto.objects.create(car=car, image=image)
         messages.success(
@@ -160,7 +160,7 @@ class CarPhotoUploadView(AdminRequiredMixin, View):
             )
             % {"count": len(images)},
         )
-        return redirect("car_detail", pk=car.pk)
+        return redirect("fleet:car_detail", pk=car.pk)
 
 
 class CarPhotoDeleteView(AdminRequiredMixin, View):
@@ -170,7 +170,7 @@ class CarPhotoDeleteView(AdminRequiredMixin, View):
             photo.image.delete(save=False)
         photo.delete()
         messages.success(request, _("Photo deleted"))
-        target = request.POST.get("next") or reverse("car_detail", kwargs={"pk": pk})
+        target = request.POST.get("next") or reverse("fleet:car_detail", kwargs={"pk": pk})
         if url_has_allowed_host_and_scheme(target, allowed_hosts={request.get_host()}):
             return redirect(target)
-        return redirect("car_detail", pk=pk)
+        return redirect("fleet:car_detail", pk=pk)

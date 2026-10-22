@@ -24,6 +24,6 @@
       {% endfor %}
       <button class="button" type="submit">{% trans "Register" %}</button>
     </form>
-    <p><a href="{% url 'login' %}">{% trans "Already have an account? Sign In" %}</a></p>
+    <p><a href="{% url 'accounts:login' %}">{% trans "Already have an account? Sign In" %}</a></p>
   </div>
 {% endblock %}

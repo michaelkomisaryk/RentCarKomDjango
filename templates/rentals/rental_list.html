@@ -4,7 +4,7 @@
 {% block title %}{% trans "All Rentals" %} · rentCarKom{% endblock %}
 
 {% block content %}
-  <p><a class="back" href="{% url 'catalog' %}">{% trans "Back to cars" %}</a></p>
+  <p><a class="back" href="{% url 'fleet:catalog' %}">{% trans "Back to cars" %}</a></p>
   <h1>{% trans "All Rentals" %}</h1>
 
   <form class="filters" method="get">
@@ -39,11 +39,11 @@
           <p>{% blocktrans count counter=rental.days %}{{ counter }} day{% plural %}{{ counter }} days{% endblocktrans %} · {{ rental.total_price|money }}</p>
           {% if rental.status == "active" %}
             <div class="actions">
-              <form method="post" action="{% url 'rental_complete' rental.pk %}">
+              <form method="post" action="{% url 'rentals:rental_complete' rental.pk %}">
                 {% csrf_token %}
                 <button class="button" type="submit">{% trans "Mark Completed" %}</button>
               </form>
-              <form method="post" action="{% url 'rental_cancel' rental.pk %}">
+              <form method="post" action="{% url 'rentals:rental_cancel' rental.pk %}">
                 {% csrf_token %}
                 <button class="button danger" type="submit">{% trans "Cancel Rental" %}</button>
               </form>

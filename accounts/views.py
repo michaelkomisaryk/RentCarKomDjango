@@ -20,7 +20,7 @@ class SignInView(LoginView):
 class RegisterView(FormView):
     template_name = "accounts/register.html"
     form_class = RegisterForm
-    success_url = reverse_lazy("login")
+    success_url = reverse_lazy("accounts:login")
 
     def form_valid(self, form):
         User.objects.create_user(
@@ -59,12 +59,12 @@ class ProfileView(LoginRequiredMixin, TemplateView):
                 user = password_form.save()
                 update_session_auth_hash(request, user)
                 messages.success(request, _("Password changed."))
-                return redirect("profile")
+                return redirect("accounts:profile")
             return self.render_to_response(self.get_context_data(password_form=password_form))
 
         form = ProfileForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
             messages.success(request, _("Profile saved."))
-            return redirect("profile")
+            return redirect("accounts:profile")
         return self.render_to_response(self.get_context_data(form=form))

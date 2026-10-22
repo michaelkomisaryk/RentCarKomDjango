@@ -8,7 +8,7 @@
   <p>{% blocktrans with brand=car.brand model=car.model %}Delete {{ brand }} {{ model }}? This cannot be undone.{% endblocktrans %}</p>
   <form method="post" class="actions">
     {% csrf_token %}
-    <a class="button secondary" href="{% url 'car_detail' car.pk %}">{% trans "Cancel" %}</a>
+    <a class="button secondary" href="{% url 'fleet:car_detail' car.pk %}">{% trans "Cancel" %}</a>
     <button class="button danger" type="submit">{% trans "Delete" %}</button>
   </form>
 {% endblock %}

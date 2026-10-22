@@ -4,7 +4,7 @@
 {% block title %}{{ car.brand }} {{ car.model }} · rentCarKom{% endblock %}
 
 {% block content %}
-  <p><a class="back" href="{% url 'catalog' %}">{% trans "Back to cars" %}</a></p>
+  <p><a class="back" href="{% url 'fleet:catalog' %}">{% trans "Back to cars" %}</a></p>
 
   <article class="detail">
     <div class="gallery" data-gallery>
@@ -83,12 +83,12 @@
         <p>{% trans "Until:" %} {{ active_rental.end_datetime|date:"Y-m-d H:i" }}</p>
         <p><strong>{% trans "Total:" %} {{ active_rental.total_price|money }}</strong></p>
         <div class="actions">
-          <form method="post" action="{% url 'rental_complete' active_rental.pk %}">
+          <form method="post" action="{% url 'rentals:rental_complete' active_rental.pk %}">
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ request.path }}">
             <button class="button" type="submit">{% trans "Mark Completed" %}</button>
           </form>
-          <form method="post" action="{% url 'rental_cancel' active_rental.pk %}">
+          <form method="post" action="{% url 'rentals:rental_cancel' active_rental.pk %}">
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ request.path }}">
             <button class="button danger" type="submit">{% trans "Cancel Rental" %}</button>
@@ -100,7 +100,7 @@
     {% if not user.is_authenticated %}
       <section class="panel">
         <p>{% trans "Log in to rent this car" %}</p>
-        {% url 'login' as login_url %}
+        {% url 'accounts:login' as login_url %}
         <a class="button" href="{% if login_url %}{{ login_url }}{% else %}/accounts/login/{% endif %}?next={{ request.path|urlencode }}">{% trans "Go to Login" %}</a>
       </section>
     {% elif car.is_rented %}
@@ -110,16 +110,16 @@
     {% elif not user.profile_is_complete %}
       <section class="panel">
         <p>{% trans "Add your phone, RNOKPP, and driver license in your profile before renting." %}</p>
-        <a class="button" href="{% url 'profile' %}">{% trans "Open profile" %}</a>
+        <a class="button" href="{% url 'accounts:profile' %}">{% trans "Open profile" %}</a>
       </section>
     {% else %}
-      <form class="form-card" method="post" action="{% url 'rent_car' car.pk %}">
+      <form class="form-card" method="post" action="{% url 'rentals:rent_car' car.pk %}">
         {% csrf_token %}
         <h2>{% trans "Book This Car" %}</h2>
         <p>{% trans "Renter from your profile:" %} <strong>{{ user.name }}</strong></p>
         <p class="muted">{{ user.email }}</p>
         <p class="muted">{{ user.phone }} · {% trans "RNOKPP" %} {{ user.rnokpp }}</p>
-        <p class="muted">{% trans "Driver license" %} {{ user.driver_license }} · <a href="{% url 'profile' %}">{% trans "Open profile" %}</a></p>
+        <p class="muted">{% trans "Driver license" %} {{ user.driver_license }} · <a href="{% url 'accounts:profile' %}">{% trans "Open profile" %}</a></p>
         <label class="field">
           {% trans "Number of days" %}
           <input type="number" name="days" min="1" value="1" required>
@@ -141,7 +141,7 @@
               <p class="muted">{{ rental.start_datetime|date:"Y-m-d" }} → {{ rental.end_datetime|date:"Y-m-d" }}</p>
               <p>{% blocktrans count counter=rental.days %}{{ counter }} day{% plural %}{{ counter }} days{% endblocktrans %} · {{ rental.total_price|money }}</p>
               {% if rental.status == "active" %}
-                <form method="post" action="{% url 'rental_cancel_own' rental.pk %}">
+                <form method="post" action="{% url 'rentals:rental_cancel_own' rental.pk %}">
                   {% csrf_token %}
                   <button class="button danger" type="submit">{% trans "Cancel rental" %}</button>
                 </form>
@@ -155,13 +155,13 @@
     {% if user.is_authenticated and user.is_admin_role %}
       <section class="panel">
         <h2>{% trans "Admin Controls" %}</h2>
-        <p class="actions"><a class="button" href="{% url 'car_edit' car.pk %}">{% trans "Edit Car" %}</a></p>
+        <p class="actions"><a class="button" href="{% url 'fleet:car_edit' car.pk %}">{% trans "Edit Car" %}</a></p>
         {% if car.photos.all %}
           <div class="photo-manage">
             {% for photo in car.photos.all %}
               <figure>
                 <img src="{{ photo.image.url }}" alt="">
-                <form method="post" action="{% url 'car_delete_photo' car.pk photo.pk %}">
+                <form method="post" action="{% url 'fleet:car_delete_photo' car.pk photo.pk %}">
                   {% csrf_token %}
                   <button class="button danger" type="submit">{% trans "Delete photo" %}</button>
                 </form>
@@ -169,7 +169,7 @@
             {% endfor %}
           </div>
         {% endif %}
-        <form method="post" action="{% url 'car_add_photos' car.pk %}" enctype="multipart/form-data">
+        <form method="post" action="{% url 'fleet:car_add_photos' car.pk %}" enctype="multipart/form-data">
           {% csrf_token %}
           <label class="field">
             {% trans "Add photos" %}
@@ -177,7 +177,7 @@
           </label>
           <button class="button secondary" type="submit">{% trans "Add Photos" %}</button>
         </form>
-        <p class="actions"><a class="button danger" href="{% url 'car_delete' car.pk %}">{% trans "Delete Car" %}</a></p>
+        <p class="actions"><a class="button danger" href="{% url 'fleet:car_delete' car.pk %}">{% trans "Delete Car" %}</a></p>
       </section>
     {% endif %}
   </article>

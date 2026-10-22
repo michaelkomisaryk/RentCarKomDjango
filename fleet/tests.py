@@ -134,10 +134,10 @@ class CatalogTests(TestCase):
 @override_settings(MEDIA_ROOT=MEDIA_ROOT)
 class AdminCarTests(TestCase):
     def test_guest_is_sent_to_login(self):
-        response = self.client.get(reverse("car_create"))
+        response = self.client.get(reverse("fleet:car_create"))
         self.assertRedirects(
             response,
-            f"/accounts/login/?next={reverse('car_create')}",
+            f"{reverse('accounts:login')}?next={reverse('fleet:car_create')}",
             fetch_redirect_response=False,
         )
 
@@ -146,8 +146,8 @@ class AdminCarTests(TestCase):
         self.client.force_login(client)
         car = Car.objects.create(**{**CAR_DATA, "price": "40"})
 
-        self.assertEqual(self.client.get(reverse("car_create")).status_code, 403)
-        self.assertEqual(self.client.post(reverse("car_delete", args=[car.pk])).status_code, 403)
+        self.assertEqual(self.client.get(reverse("fleet:car_create")).status_code, 403)
+        self.assertEqual(self.client.post(reverse("fleet:car_delete", args=[car.pk])).status_code, 403)
         self.assertTrue(Car.objects.filter(pk=car.pk).exists())
 
     def test_admin_can_add_a_car_with_a_photo(self):
@@ -155,7 +155,7 @@ class AdminCarTests(TestCase):
         self.client.force_login(admin)
 
         response = self.client.post(
-            reverse("car_create"),
+            reverse("fleet:car_create"),
             {**CAR_DATA, "photos": [tiny_png("a.png"), tiny_png("b.png")]},
             follow=True,
         )
@@ -171,7 +171,7 @@ class AdminCarTests(TestCase):
         self.client.force_login(admin)
 
         response = self.client.post(
-            reverse("car_create"),
+            reverse("fleet:car_create"),
             {**CAR_DATA, "year": 1800, "price": "0"},
         )
 
@@ -186,7 +186,7 @@ class AdminCarTests(TestCase):
         self.client.post(reverse("set_language"), {"language": "uk", "next": "/"})
 
         self.client.post(
-            reverse("car_create"),
+            reverse("fleet:car_create"),
             {**CAR_DATA, "price": "4150", "plate": "UA 0100 KK"},
         )
 
@@ -207,14 +207,14 @@ class AdminCarTests(TestCase):
         )
 
         upload = self.client.post(
-            reverse("car_add_photos", args=[car.pk]),
+            reverse("fleet:car_add_photos", args=[car.pk]),
             {"photos": tiny_png()},
             follow=True,
         )
         self.assertContains(upload, "Added 1 photo")
         self.assertEqual(CarPhoto.objects.filter(car=car).count(), 1)
 
-        self.client.post(reverse("car_delete", args=[car.pk]))
+        self.client.post(reverse("fleet:car_delete", args=[car.pk]))
         self.assertFalse(Car.objects.filter(pk=car.pk).exists())
         self.assertFalse(CarPhoto.objects.filter(car_id=car.pk).exists())
 
@@ -231,13 +231,13 @@ class AdminCarTests(TestCase):
             transmission="Manual",
             car_class="Economy",
         )
-        self.client.post(reverse("car_add_photos", args=[car.pk]), {"photos": [tiny_png("one.png"), tiny_png("two.png")]})
+        self.client.post(reverse("fleet:car_add_photos", args=[car.pk]), {"photos": [tiny_png("one.png"), tiny_png("two.png")]})
         photos = list(CarPhoto.objects.filter(car=car))
         self.assertEqual(len(photos), 2)
         removed_path = photos[0].image.path
 
         updated = self.client.post(
-            reverse("car_edit", args=[car.pk]),
+            reverse("fleet:car_edit", args=[car.pk]),
             {
                 "brand": "Fiat",
                 "model": "500X",
@@ -261,7 +261,7 @@ class AdminCarTests(TestCase):
         self.assertContains(updated, "Comfort")
 
         deleted = self.client.post(
-            reverse("car_delete_photo", args=[car.pk, photos[0].pk]),
+            reverse("fleet:car_delete_photo", args=[car.pk, photos[0].pk]),
             follow=True,
         )
         self.assertContains(deleted, "Photo deleted")
@@ -283,9 +283,9 @@ class AdminCarTests(TestCase):
         )
         photo = CarPhoto.objects.create(car=car, image=tiny_png())
 
-        self.assertEqual(self.client.get(reverse("car_edit", args=[car.pk])).status_code, 403)
+        self.assertEqual(self.client.get(reverse("fleet:car_edit", args=[car.pk])).status_code, 403)
         self.assertEqual(
-            self.client.post(reverse("car_delete_photo", args=[car.pk, photo.pk])).status_code,
+            self.client.post(reverse("fleet:car_delete_photo", args=[car.pk, photo.pk])).status_code,
             403,
         )
         self.assertTrue(CarPhoto.objects.filter(pk=photo.pk).exists())
@@ -295,7 +295,7 @@ class AdminCarTests(TestCase):
         client = make_user("client-link@example.com", Role.CLIENT)
 
         self.client.force_login(admin)
-        self.assertContains(self.client.get(reverse("catalog")), "Add Car")
+        self.assertContains(self.client.get(reverse("fleet:catalog")), "Add Car")
 
         self.client.force_login(client)
-        self.assertNotContains(self.client.get(reverse("catalog")), "Add Car")
+        self.assertNotContains(self.client.get(reverse("fleet:catalog")), "Add Car")

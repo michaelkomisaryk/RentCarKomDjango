@@ -20,7 +20,7 @@
       {% endfor %}
       <button class="button" type="submit">{% trans "Sign In" %}</button>
     </form>
-    <p><a href="{% url 'register' %}">{% trans "Don't have an account? Register" %}</a></p>
-    <p><a href="{% url 'catalog' %}">{% trans "Continue as Guest" %}</a></p>
+    <p><a href="{% url 'accounts:register' %}">{% trans "Don't have an account? Register" %}</a></p>
+    <p><a href="{% url 'fleet:catalog' %}">{% trans "Continue as Guest" %}</a></p>
   </div>
 {% endblock %}

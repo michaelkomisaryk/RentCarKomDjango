@@ -20,32 +20,38 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="{% url 'catalog' %}">
+    <a class="brand" href="{% url 'fleet:catalog' %}">
       <img class="logo logo-light" src="{% static 'brand/logo-light.svg' %}?v=6" alt="RentCarKom">
       <img class="logo logo-dark" src="{% static 'brand/logo-dark.svg' %}?v=6" alt="">
     </a>
     <button class="menu-button" type="button" data-menu aria-expanded="false" aria-controls="site-nav">{% trans "Menu" %}</button>
     <nav class="nav" id="site-nav" data-nav>
-      <a class="{% if request.path == '/' %}is-active{% endif %}" href="{% url 'catalog' %}">{% trans "Cars" %}</a>
+      {% url 'fleet:catalog' as catalog_url %}
+      {% url 'rentals:rental_list' as rentals_url %}
+      {% url 'fleet:car_create' as create_url %}
+      {% url 'accounts:profile' as profile_url %}
+      {% url 'accounts:login' as login_url %}
+      {% url 'accounts:register' as register_url %}
+      <a class="{% if request.path == catalog_url %}is-active{% endif %}" href="{{ catalog_url }}">{% trans "Cars" %}</a>
       {% if user.is_authenticated %}
         {% if user.is_staff_role %}
-          <a class="{% if request.path == '/rentals/' %}is-active{% endif %}" href="{% url 'rental_list' %}">{% trans "All Rentals" %}</a>
+          <a class="{% if request.path == rentals_url %}is-active{% endif %}" href="{{ rentals_url }}">{% trans "All Rentals" %}</a>
         {% endif %}
         {% if user.is_admin_role %}
-          <a class="{% if request.path == '/fleet/cars/new/' %}is-active{% endif %}" href="{% url 'car_create' %}">{% trans "Add Car" %}</a>
+          <a class="{% if request.path == create_url %}is-active{% endif %}" href="{{ create_url }}">{% trans "Add Car" %}</a>
         {% endif %}
-        <a class="{% if request.path == '/accounts/profile/' %}is-active{% endif %}" href="{% url 'profile' %}">{{ user.name }}</a>
+        <a class="{% if request.path == profile_url %}is-active{% endif %}" href="{{ profile_url }}">{{ user.name }}</a>
         <span class="chip role {{ user.role }}">
           {% if user.role == "admin" %}{% trans "ADMIN" %}{% elif user.role == "manager" %}{% trans "MANAGER" %}{% else %}{% trans "CLIENT" %}{% endif %}
         </span>
-        <form method="post" action="{% url 'logout' %}">
+        <form method="post" action="{% url 'accounts:logout' %}">
           {% csrf_token %}
           <button class="link-button" type="submit">{% trans "Log out" %}</button>
         </form>
       {% else %}
         <span class="chip role guest">{% trans "GUEST" %}</span>
-        <a class="{% if request.path == '/accounts/login/' %}is-active{% endif %}" href="{% url 'login' %}">{% trans "Sign in" %}</a>
-        <a class="{% if request.path == '/accounts/register/' %}is-active{% endif %}" href="{% url 'register' %}">{% trans "Register" %}</a>
+        <a class="{% if request.path == login_url %}is-active{% endif %}" href="{{ login_url }}">{% trans "Sign in" %}</a>
+        <a class="{% if request.path == register_url %}is-active{% endif %}" href="{{ register_url }}">{% trans "Register" %}</a>
       {% endif %}
     </nav>
     <form class="lang-switch" method="post" action="{% url 'set_language' %}" aria-label="{% trans 'Language' %}">
