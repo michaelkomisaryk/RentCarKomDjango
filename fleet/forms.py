@@ -21,6 +21,7 @@ class CarForm(forms.ModelForm):
             "car_class",
             "mileage",
             "description",
+            "is_featured",
         ]
         labels = {
             "brand": _("Brand"),
@@ -35,6 +36,7 @@ class CarForm(forms.ModelForm):
             "car_class": _("Class"),
             "mileage": _("Mileage (km)"),
             "description": _("Description"),
+            "is_featured": _("Featured"),
         }
         widgets = {
             "description": forms.Textarea(attrs={"rows": 4}),

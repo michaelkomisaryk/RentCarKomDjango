@@ -42,6 +42,7 @@ class Car(models.Model):
     color = models.CharField(max_length=50, blank=True)
     mileage = models.PositiveIntegerField(default=0)
     description = models.TextField(blank=True)
+    is_featured = models.BooleanField(default=False)
     added_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         null=True,
