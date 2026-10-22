@@ -44,6 +44,11 @@ class Car(models.Model):
     mileage = models.PositiveIntegerField(default=0)
     description = models.TextField(blank=True)
     is_featured = models.BooleanField(default=False)
+    favorited_by = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        blank=True,
+        related_name="favorite_cars",
+    )
     added_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         null=True,
