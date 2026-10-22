@@ -35,7 +35,11 @@ _load_env(BASE_DIR / ".env")
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-2&a3hlfubh$@7rubg5v^o52$ta1fde*&nd6^&moessx*fpv2q_'
+SECRET_KEY = os.environ.get("SECRET_KEY", "")
+if not SECRET_KEY:
+    from django.core.exceptions import ImproperlyConfigured
+
+    raise ImproperlyConfigured("Set SECRET_KEY in the environment.")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
