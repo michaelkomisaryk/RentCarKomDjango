@@ -4,7 +4,7 @@ Car rental app rebuilt with Django. The temporary pages cover the same roles and
 
 ## Setup
 
-The app uses a local MySQL database named `rentcarkom`. Connection settings live in `.env`.
+The app uses MySQL 8.0.46. The database name is `rentcarkom`. Connection settings live in `.env`.
 
 ```bash
 python3 -m venv .venv
