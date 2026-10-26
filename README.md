@@ -1,6 +1,6 @@
 # rentCarKom
 
-Car rental app rebuilt with Django. The temporary pages cover the same roles and flows as the original Flet app. The layout is meant to be replaced later.
+Car rental site built with Django. Guests browse the fleet, clients book a car, and staff manage rentals.
 
 ## Setup
 
